@@ -25,8 +25,8 @@ function Medicine({inputRef}) {
                 })
             });
             const data = await response.json();
+            setLoading(false);
             if (data.candidates[0].content.parts.length > 0) {
-                setLoading(false);
                 const { content } = data.candidates[0];
                 const responseTextWithoutAsterisks = content.parts[0].text.replace(/\*/g, ' ');
                 setResponseText(responseTextWithoutAsterisks);
