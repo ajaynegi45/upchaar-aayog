@@ -38,6 +38,7 @@ function Medicine({inputRef}) {
         }
     };
 
+
     return (
         <div className={"medicine-name-container"} >
             <div className={"medicine-name-input-container"}>
