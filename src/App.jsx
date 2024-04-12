@@ -39,6 +39,21 @@ function App() {
 
           <Medicine inputRef={medicineInputRef} />
 
+          <div className={"about-container"}>
+            <h1>What is Upchaar Aayog ?</h1>
+              <p>Upchaar-Aayog follow holistic
+                  approach of addressing
+                  affordability, prescription
+                  knowledge, and accessibility, we aim
+                  to bridge the gap in healthcare
+                  access for economically
+                  disadvantaged individuals, ensuring
+                  no one is deprived of essential
+                  medications due to financial
+                  constraints or lack of information.</p>
+              <img src="" alt="" />
+          </div>
+
       </>
   )
 }

@@ -89,3 +89,21 @@
     background-color: white;
     border: none;
 }
+
+
+.about-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.about-container > h1{
+    color: var(--action-color);
+}
+
+.about-container > p{
+    margin-top: 2rem;
+    font-size: 1.2rem;
+}
