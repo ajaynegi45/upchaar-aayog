@@ -1,0 +1,62 @@
+.medicine-name-container > .medicine-name-input-container{
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.medicine-name-container > .medicine-name-input-container > input {
+    width: 20rem;
+    height: 3.5rem;
+    /*border-radius: 50px;*/
+    padding: 0px 0px 0px 10px;
+    border: 2px solid black;
+    border-right-style: none;
+    font-size: 1.2rem;
+
+}
+
+.medicine-name-container > .medicine-name-input-container >  input:hover {
+    border: 2px solid var(--information-color);
+}
+
+.medicine-name-container > .medicine-name-input-container >  input:focus {
+    outline: none;
+    border: 2px solid var(--information-color);
+}
+
+.medicine-name-container > .medicine-name-input-container > button {
+    /*border-radius: 10px;*/
+    padding: 7px  10px;
+    border-left-style: none;
+    border: 2px solid black;
+    color: white;
+    background-color: var(--action-color);
+    font-size: 1rem;
+}
+
+.medicine-name-container > .medicine-name-input-container > button:hover {
+    background-color: var(--information-color);
+    cursor: pointer;
+}
+
+.medicine-name-container > p {
+    padding: 2rem;
+}
+
+.search-container > input:focus {
+    outline: none;
+    border: 2px solid var(--information-color);
+}
+
+.search-container > button {
+    background-color: white;
+    border: none;
+}
+
+
+.medicine_loading{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

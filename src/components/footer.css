@@ -1,6 +1,13 @@
 .footer{
     margin-top: 10rem;
-    margin-bottom: 1rem;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--action-color);
+    height: 100px;
+    padding-top: 2rem;
+}
+
+.footer > p {
+    color: white;
 }

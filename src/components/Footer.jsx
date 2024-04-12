@@ -3,7 +3,9 @@ import "./footer.css"
 function Footer() {
     return (
         <div className={"footer"}>
-            Footer</div>
+            <p>Developed with ❤️ by Codies Coder</p>
+            <p>©️ {(new Date().getFullYear())} Upchaar Aayog</p>
+        </div>
     );
 }
 
