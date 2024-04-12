@@ -5,12 +5,20 @@ function Medicine({inputRef}) {
     const [inputValue, setInputValue] = useState('');
     const [responseText, setResponseText] = useState('');
     const [loading, setLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+
 
     const handleInputChange = (event) => {
         setInputValue(event.target.value);
+        setErrorMessage('');
     };
 
     const handleSubmit = async () => {
+        if (!inputValue.trim()) {
+            setErrorMessage('Please enter a medicine name');
+            return;
+        }
+
         setLoading(true);
         try {
             const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${import.meta.env.VITE_API_KEY}`, {
@@ -42,9 +50,11 @@ function Medicine({inputRef}) {
     return (
         <div className={"medicine-name-container"} >
             <div className={"medicine-name-input-container"}>
-                <input ref={inputRef}  type="text" value={inputValue} placeholder={"Enter Medicine Name"} onChange={handleInputChange} />
+                <input ref={inputRef}  type="text" value={inputValue} placeholder={"Enter Medicine Name"} onChange={handleInputChange} required={true}/>
                 <button onClick={handleSubmit}>Submit</button>
             </div>
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
+
             { loading ? (<div className={"medicine_loading"}><img src={"/loading.svg"}/></div>):
                 <p>{responseText}</p>
             }

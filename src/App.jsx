@@ -1,10 +1,8 @@
 import './App.css';
 import Hero from "./assets/hero-bg.png";
-import Doctor from "./assets/hero.png";
-import search from "./assets/search.svg";
+import Doctor from "./assets/doctor.png";
 import Medicine from "./components/Medicine.jsx";
 import {useRef} from "react";
-// import Hero from "./components/Hero.jsx";
 
 
 function App() {
@@ -46,7 +44,3 @@ function App() {
 }
 
 export default App
-
-
-// https://www.myupchar.com/home/medicine_api
-// https://open.fda.gov/apis/drug/event/how-to-use-the-endpoint/

@@ -8,7 +8,6 @@
 }
 .hero-info-container {
     display: flex;
-    justify-content: center;
     align-items: center;
 
     position: absolute;
@@ -20,11 +19,12 @@
     margin-top: 100px;
 }
 .hero-info-container > .doctor-image-container > img {
-    margin-top: 8rem;
-    width: 30rem;
+    margin-top: 3rem;
+    width: 40rem;
 }
 .info-container{
-    margin-right: 30rem;
+    margin-top: 5rem;
+    margin-right: 15rem;
 }
 
 .info-container > h1 {
