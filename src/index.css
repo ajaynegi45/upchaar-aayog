@@ -1,0 +1,27 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+*{
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+
+  --action-color: #283779;
+  --information-color: #1B71A1;
+}
+
+body{
+  background-color: white;
+}
+body::-webkit-scrollbar{
+  display: none;  /* Hide scrollbar */
+}
+
+a{
+  text-decoration: none;
+}
+
+a:hover{
+  cursor: pointer;
+}

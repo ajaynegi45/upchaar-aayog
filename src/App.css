@@ -1,0 +1,92 @@
+.hero-image-container {
+    position: relative;
+}
+.hero-image-container > img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+.hero-info-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.hero-info-container > .doctor-image-container {
+    margin-top: 100px;
+}
+.hero-info-container > .doctor-image-container > img {
+    margin-top: 8rem;
+    width: 30rem;
+}
+.info-container{
+    margin-right: 30rem;
+}
+
+.info-container > h1 {
+    color: var(--action-color);
+    font-size: 3rem;
+    margin-top: 7rem;
+}
+
+.info-container > p{
+    margin-top: 2rem;
+    font-size: 1.2rem;
+    color: var(--information-color);
+}
+
+.info-container > button{
+    font-size: 1.2rem;
+    background-color: var(--action-color);
+    color: white;
+    margin-top: 5rem;
+    padding: 12px 18px;
+    border-radius: 5px;
+    border: none;
+}
+
+.info-container > button:hover{
+    background-color: var(--information-color);
+    cursor: pointer;
+}
+
+.hero-title{
+    display: flex;
+    justify-content: center;
+    font-size: 3rem;
+    color: var(--action-color);
+}
+
+.search-container {
+    display: flex;
+    justify-content:center;
+    align-items: center;
+
+    margin-top: 5rem;
+}
+.search-container > input {
+    /*margin-right: 2rem;*/
+    width: 20rem;
+    height: 2rem;
+    border-radius: 5px;
+    border: 2px solid black;
+}
+
+.search-container > input:hover {
+    border: 2px solid var(--information-color);
+}
+
+.search-container > input:focus {
+    outline: none;
+    border: 2px solid var(--information-color);
+}
+
+
+.search-container > button {
+    background-color: white;
+    border: none;
+}

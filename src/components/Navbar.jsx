@@ -1,0 +1,23 @@
+import "./navbar.css"
+import {Link} from "react-router-dom";
+function Navbar() {
+    return (
+        <>
+            <header className="navbar-header">
+                <Link to={"/"}>
+                    <h1 className="title">Upchaar Aayog</h1>
+                </Link>
+
+                <nav className="navbar">
+                    <ul className="navbar-list">
+                        <li><a className="navbar-link" href="/login">Login</a></li>
+                    </ul>
+                </nav>
+            </header>
+            <div className="navbar-backside-frame"></div>
+        </>
+    );
+}
+export default Navbar;
+
+
