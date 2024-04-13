@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import "./medicine.css"
-// eslint-disable-next-line react/prop-types
+import SearchIcon from "../assets/search.svg";
+
 function Medicine({inputRef}) {
     const [inputValue, setInputValue] = useState('');
     const [responseText, setResponseText] = useState('');
@@ -51,7 +52,7 @@ function Medicine({inputRef}) {
         <div className={"medicine-name-container"} >
             <div className={"medicine-name-input-container"}>
                 <input ref={inputRef}  type="text" value={inputValue} placeholder={"Enter Medicine Name"} onChange={handleInputChange} required={true}/>
-                <button onClick={handleSubmit}>Submit</button>
+                <button onClick={handleSubmit}><img src={SearchIcon} alt=""/> </button>
             </div>
             {errorMessage && <p className="error-message">{errorMessage}</p>}
 
