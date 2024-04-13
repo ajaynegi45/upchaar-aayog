@@ -42,7 +42,7 @@ function App() {
 
             <div className={"janaushadhi-location-container"}>
                 <h1>Find nearby Jan Aushadhi Kendra</h1>
-                <Link to={"https://janaushadhi.gov.in/KendraDetails.aspx"}>
+                <Link to={"https://janaushadhi.gov.in/KendraDetails.aspx"} target="_blank" rel="noopener noreferrer">
                     <button className={"janaushadhi-location-button"}>Search Jan Aushadhi Kendra</button>
                 </Link>
             </div>
@@ -50,7 +50,7 @@ function App() {
 
             <div className={"janaushadhi-location-container"}>
                 <h1>Find nearby Pradhan Mantri Jan Arogya Yojana</h1>
-                <Link to={"https://web.umang.gov.in/web_new/department?url=pmjay_nha%2Fservice%2F1112&dept_id=184&dept_name=Pradhan%20Mantri%20Jan%20Arogya%20Yojana\n"}>
+                <Link to={"https://web.umang.gov.in/web_new/department?url=pmjay_nha%2Fservice%2F1112&dept_id=184&dept_name=Pradhan%20Mantri%20Jan%20Arogya%20Yojana"} target="_blank">
                     <button className={"janaushadhi-location-button"}>Search PM-JAY</button>
                 </Link>
             </div>
