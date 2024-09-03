@@ -1,37 +1,43 @@
 .medicine-name-container > .medicine-name-input-container{
     display: flex;
     justify-content: center;
-    margin-top: 2rem;
+    margin-top: 5rem;
 }
 .medicine-name-container > .medicine-name-input-container > input {
     width: 20rem;
-    height: 3.5rem;
+    height: 3rem;
     /*border-radius: 50px;*/
     padding: 0px 0px 0px 10px;
-    border: 2px solid black;
+    border: 1px solid black;
     border-right-style: none;
-    font-size: 1.2rem;
-    border-top-left-radius: 15px;
+    font-size: 1rem;
+    font-weight: 100;
+    border-top-left-radius: 13px;
     border-bottom-left-radius: 15px;
 }
 .medicine-name-container > .medicine-name-input-container >  input:hover {
-    border: 2px solid var(--information-color);
+    /*border: 2px solid var(--information-color);*/
 }
 .medicine-name-container > .medicine-name-input-container >  input:focus {
     outline: none;
-    border: 2px solid var(--information-color);
+
+    border-top: 2px solid var(--information-color);
+    border-bottom: 2px solid var(--information-color);
+    border-left: 2px solid var(--information-color);
+    /*border: 2px solid var(--information-color);*/
 }
 .medicine-name-container > .medicine-name-input-container > button {
     /*border-radius: 10px;*/
     padding: 7px  20px;
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
-    border-left-style: none;
     border: 2px solid black;
     color: white;
     background-color: var(--action-color);
     font-size: 1rem;
 }
+
+
 .medicine-name-container > .medicine-name-input-container > button:hover {
     background-color: var(--information-color);
     cursor: pointer;
@@ -39,13 +45,10 @@
 .medicine-name-container > p {
     padding: 2rem;
 }
-.search-container > input:focus {
-    outline: none;
-    border: 2px solid var(--information-color);
-}
-.search-container > button {
-    background-color: white;
-    border: none;
+.error-message{
+    display: flex;
+    justify-content: center;
+    color: red;
 }
 .medicine_loading{
     width: 100%;
@@ -53,8 +56,13 @@
     justify-content: center;
     align-items: center;
 }
-.error-message{
-    display: flex;
-    justify-content: center;
-    color: var(--information-color);
+
+
+
+
+
+
+
+@media (max-width: 900px) {
+
 }

@@ -1,44 +1,54 @@
 import './App.css';
 import Hero from "./assets/hero-bg.png";
-import Doctor from "./assets/doctor.png";
+import Doctor from "./assets/doctor.webp";
 import Medicine from "./components/Medicine.jsx";
 import {useRef} from "react";
 import {Link} from "react-router-dom";
-
+import Injection from "./assets/injection.webp"
+import MedicineImage from "./assets/medicine.webp";
+import Stethoscope from "./assets/stethoscope.webp";
 
 function App() {
 
     const medicineInputRef = useRef(null);
-
     const handleSearchMedicine = () => {
         if (medicineInputRef.current) {
             medicineInputRef.current.focus();
         }
     };
 
-
     return (
-        <>
-
-
+        <section className={"home-page-container"}>
             <div className={"hero-image-container"}>
                 <img src={Hero} alt="Hero Image"/>
             </div>
 
+
+
             <div className={"hero-info-container"}>
+
                 <div className={"info-container"}>
                     <h1>Generic&nbsp;Name</h1>
-                    <p>Find Your Remedy, Anytime, Anywhere: <br/> Your Gateway to Generic Medicine Search!</p>
-                    <button onClick={handleSearchMedicine}>Search Medicine</button>
+                    <p className={"home-info"}>Find Your Remedy, Anytime, Anywhere: <br/> Your Gateway to Generic Medicine Search!</p>
+                    <button  onClick={handleSearchMedicine}>Search Medicine</button>
                 </div>
+
                 <div className={"doctor-image-container"}>
                     <img src={Doctor} alt=""/>
                 </div>
+
             </div>
+
+
 
             <h1 className={"hero-title"}>Search Medicine</h1>
 
             <Medicine inputRef={medicineInputRef}/>
+
+            {/*<div className={"background-container"}>*/}
+            {/*    <img className={"stethoscopeImage1"} src={Stethoscope} alt=""/>*/}
+            {/*    <img className={"stethoscopeImage2"} src={Injection} alt=""/>*/}
+            {/*</div>*/}
 
             <div className={"janaushadhi-location-container"}>
                 <h1>Find nearby Jan Aushadhi Kendra</h1>
@@ -50,7 +60,9 @@ function App() {
 
             <div className={"janaushadhi-location-container"}>
                 <h1>Find nearby Pradhan Mantri Jan Arogya Yojana</h1>
-                <Link to={"https://web.umang.gov.in/web_new/department?url=pmjay_nha%2Fservice%2F1112&dept_id=184&dept_name=Pradhan%20Mantri%20Jan%20Arogya%20Yojana"} target="_blank">
+                <Link
+                    to={"https://web.umang.gov.in/web_new/department?url=pmjay_nha%2Fservice%2F1112&dept_id=184&dept_name=Pradhan%20Mantri%20Jan%20Arogya%20Yojana"}
+                    target="_blank">
                     <button className={"janaushadhi-location-button"}>Search PM-JAY</button>
                 </Link>
             </div>
@@ -71,7 +83,7 @@ function App() {
                 <img src="" alt=""/>
             </div>
 
-        </>
+        </section>
     )
 }
 

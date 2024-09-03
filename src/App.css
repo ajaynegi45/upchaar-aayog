@@ -1,3 +1,7 @@
+.home-page-container{
+    background-color: #f1fAff;
+}
+
 .hero-image-container {
     position: relative;
 }
@@ -7,24 +11,29 @@
     object-fit: contain;
 }
 .hero-info-container {
+    overflow:hidden;
+    width: 100%;
     display: flex;
     align-items: center;
+    justify-content: center;
+    gap: 30vw;
 
     position: absolute;
     top: 0;
-    left: 50%;
-    transform: translateX(-50%);
+    margin-top: 70px;
 }
 .hero-info-container > .doctor-image-container {
-    margin-top: 100px;
 }
 .hero-info-container > .doctor-image-container > img {
     margin-top: 3rem;
-    width: 40rem;
+
+    width: 30vw;
+    max-width: 40rem;
+
 }
 .info-container{
-    margin-top: 5rem;
-    margin-right: 15rem;
+
+
 }
 
 .info-container > h1 {
@@ -47,12 +56,30 @@
     padding: 12px 18px;
     border-radius: 5px;
     border: none;
+    transition-duration: 0.2s;
+    transition: ease-in-out;
+    animation: ease-in-out;
 }
 
 .info-container > button:hover{
     background-color: var(--information-color);
     cursor: pointer;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .hero-title{
     display: flex;
@@ -91,6 +118,80 @@
 }
 
 
+@media (max-width: 900px) {
+
+    .info-container > h1 {
+        font-size: 2rem;
+        margin-top: 2rem;
+    }
+
+    .info-container > .home-info {
+        margin-top: 1rem;
+        font-size: 14px;
+        color: var(--information-color);
+    }
+
+    .hero-info-container {
+        flex-direction: column-reverse;
+        gap: 2vw;
+        position: static;
+        margin-top: 1px;
+    }
+
+    .hero-image-container{
+        display: none;
+    }
+
+    .info-container{
+        width: 100%;
+        text-align: center;
+    }
+
+    .hero-info-container > .doctor-image-container > img {
+        margin-top: 2.2rem;
+
+        width: 30vw;
+        max-width: 40rem;
+
+    }
+
+    .info-container > button{
+        font-size: 0.7rem;
+        background-color: var(--action-color);
+        color: white;
+        margin-top: 2rem;
+        padding: 12px 18px;
+        border-radius: 5px;
+        border: none;
+        transition-duration: 0.2s;
+        transition: ease-in-out;
+        animation: ease-in-out;
+    }
+
+
+    .hero-title{
+        font-size: 2rem;
+        margin-top: 5rem;
+    }
+
+    .search-container {
+        margin-top: 10rem;
+    }
+
+    .search-container > input {
+        width: 10rem;
+        height: 2rem;
+        border-radius: 5px;
+        border: 2px solid black;
+    }
+
+}
+
+
+
+
+
+
 .about-container {
     display: flex;
     flex-direction: column;
@@ -107,6 +208,8 @@
 .about-container > p{
     margin-top: 2rem;
     font-size: 1.2rem;
+
+    margin-bottom: 10rem;
 }
 
 
@@ -132,4 +235,21 @@
 .janaushadhi-location-button:hover{
     color: white;
     background-color: var(--information-color);
+}
+
+.background-container {
+    overflow: hidden;
+
+}
+.stethoscopeImage1{
+    position: absolute;
+    opacity: 60%;
+    overflow: hidden;
+}
+.stethoscopeImage2{
+    position: absolute;
+    opacity: 60%;
+
+    margin-left: 55%;
+    overflow: hidden;
 }

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import "./medicine.css"
 import SearchIcon from "../assets/search.svg";
 
+// eslint-disable-next-line react/prop-types
 function Medicine({inputRef}) {
     const [inputValue, setInputValue] = useState('');
     const [responseText, setResponseText] = useState('');
@@ -29,7 +30,11 @@ function Medicine({inputRef}) {
                 },
                 body: JSON.stringify({
                     "contents": [{
-                        "parts": [{ "text": `${inputValue}Tablet` }]
+                        "parts": [{ "text": `${inputValue} Tablet. Answer in Simple English and tell me Generic Name` }]
+
+                        // "parts": [{ "text": `Generic name of ${inputValue} Tablet` }]
+
+                        // "parts": [{ "text": `The generic name of the tablet whose brand name is ${inputValue}` }]
                     }]
                 })
             });
@@ -43,16 +48,18 @@ function Medicine({inputRef}) {
                 setResponseText('No response found');
             }
         } catch (error) {
+            setErrorMessage('Error fetching data');
             console.error('Error fetching data:', error);
         }
     };
 
-
     return (
         <div className={"medicine-name-container"} >
             <div className={"medicine-name-input-container"}>
-                <input ref={inputRef}  type="text" value={inputValue} placeholder={"Enter Medicine Name"} onChange={handleInputChange} required={true}/>
-                <button onClick={handleSubmit}><img src={SearchIcon} alt=""/> </button>
+                <input ref={inputRef}  type="text" value={inputValue} placeholder={"Enter Medicine Name"} onChange={handleInputChange} required={true}
+                       onKeyPress={(event) => event.key === 'Enter' && handleSubmit()}
+                />
+                <button onClick={handleSubmit} ><img src={SearchIcon} alt=""/> </button>
             </div>
             {errorMessage && <p className="error-message">{errorMessage}</p>}
 
