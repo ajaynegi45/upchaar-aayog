@@ -1,13 +1,101 @@
-.footer{
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: var(--action-color);
-    height: 100px;
-    padding-top: 2rem;
+:root {
+  --action-color: #007bff; /* Original action color */
+  --text-color: #fff; /* Original text color */
+  --hover-color: #ff9900; /* Hover effect color */
+  --divider-color: #555; /* Subtle divider color */
 }
 
-.footer > p {
-    color: white;
+.footer {
+  background-color: var(--action-color);
+  color: var(--text-color);
+  padding: 40px 0;
+  text-align: center;
+  position: relative;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-social-links {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.footer-icon-link {
+  color: var(--text-color);
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.footer-icon-link:hover {
+  color: var(--hover-color);
+  transform: translateY(-5px);
+}
+
+.footer-icon {
+  width: 30px;
+  height: 30px;
+}
+
+.footer-links {
+  margin: 20px 0; /* Spacing for links */
+}
+
+.footer-link {
+  color: var(--text-color);
+  text-decoration: none;
+  margin: 0 15px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+  color: var(--hover-color); /* Change color on hover */
+}
+
+.footer-text {
+  font-size: 16px;
+  margin: 10px 0;
+}
+
+.footer-year {
+  font-size: 14px;
+  color: var(--text-color);
+}
+
+.heart {
+  color: red; /* Heart color */
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+.footer-bottom {
+  margin-top: 20px;
+  border-top: 1px solid var(--divider-color); /* Divider line */
+  padding-top: 15px;
+}
+
+.footer {
+  box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+}
+
+@media (max-width: 768px) {
+  .footer-text {
+    font-size: 14px; /* Adjust text size for smaller screens */
+  }
+  .footer-icon {
+    width: 25px;
+    height: 25px;
+  }
 }
