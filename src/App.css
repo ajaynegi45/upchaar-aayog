@@ -235,6 +235,7 @@
 .janaushadhi-location-button:hover{
     color: white;
     background-color: var(--information-color);
+    cursor: pointer;
 }
 
 .background-container {

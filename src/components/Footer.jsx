@@ -7,36 +7,41 @@ function Footer() {
     <footer className="footer">
       <div className="footer-content container">
         <div className="footer-social-links">
+
           <a
-            href="https://github.com/Madan2468"
+            href="https://github.com/ajaynegi45"
             target="_blank"
             rel="noreferrer"
             className="footer-icon-link"
           >
             <FaGithub className="footer-icon" />
           </a>
+
           <a
-            href="https://linkedin.com"
+            href="https://www.linkedin.com/in/ajaynegi45/"
             target="_blank"
             rel="noreferrer"
             className="footer-icon-link"
           >
             <FaLinkedin className="footer-icon" />
           </a>
+
           <a
-            href="https://x.com/ajaynegi45" // Add your Twitter link here
+            href="https://x.com/ajaynegi45"
             target="_blank"
             rel="noreferrer"
             className="footer-icon-link"
           >
             <FaTwitter className="footer-icon" />
           </a>
-          <a
-            href="mailto:ajaynegi3345@icloud.com" // Updated email link
-            className="footer-icon-link"
-          >
-            <FaEnvelope className="footer-icon" />
-          </a>
+
+          {/*<a*/}
+          {/*  href="mailto:ajaynegi3345@icloud.com" // Updated email link*/}
+          {/*  className="footer-icon-link"*/}
+          {/*>*/}
+          {/*  <FaEnvelope className="footer-icon" />*/}
+          {/*</a>*/}
+
         </div>
         <div className="footer-bottom">
           <p className="footer-text">
