@@ -16,8 +16,7 @@
 
 The Upchaar Aayog project is designed for users to find affordable generic medications, nearby  **Jan Aushadhi Kendras** , and **Ayushman Bharat hospitals** for free treatment up to ₹5 lakh. This documentation aims to help new contributors understand the project structure and how to effectively contribute.
 
-
-### Key Features of Upchaar Aayog
+### Potential Key Features of Upchaar Aayog (this is where you can contribute)
 
 1. **User Authentication:**
    * Secure login and registration system for users.
@@ -101,8 +100,6 @@ To set up the development environment-
 git clone https://github.com/ajaynegi45/upchaar-aayog.git
 cd upchaar-aayog
 ```
-
-
 
 ## Contributing
 
