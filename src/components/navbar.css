@@ -1,9 +1,6 @@
-.navbar-backside-frame{
-    height: 78px;
-}
+/* Navbar Header */
 .navbar-header {
     padding: 20px 30px;
-    /*padding-bottom: 60px;*/
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -11,46 +8,155 @@
     top: 0;
     width: 100%;
     z-index: 100;
-    background-color: rgba(249, 250, 253, 0);
-
-    -webkit-backdrop-filter: saturate(180%) blur(4px);
-    backdrop-filter: saturate(180%) blur(10px);
-    box-shadow:  0 3px 20px 2px rgba(0,0,0,0.1);
-
-    /*-webkit-mask-image: linear-gradient(to bottom, #000000 55%, rgba(0, 0, 0, 0));*/
-    /*mask-image: linear-gradient(to bottom, #000000 5%, rgba(0, 0, 0, 0));*/
+    background-color: rgba(249, 250, 253, 0.8); /* Slightly opaque background for better contrast */
+    backdrop-filter: saturate(180%) blur(10px); /* Blur effect */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Enhanced shadow */
+    border-bottom: 2px solid rgba(0, 0, 0, 0.05); /* Subtle bottom border */
+    animation: fadeInDown 0.8s ease-out; /* Navbar fade-in animation */
 }
-.navbar > ul{
-    list-style: none;
+
+/* Fade-in animation for navbar */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
-nav > ul > li > .navbar-link{
+
+/* Navbar Backside Frame */
+.navbar-backside-frame {
+    height: 78px;
+    background-color: transparent;
+}
+
+/* Navbar List */
+.navbar > ul {
     list-style: none;
+    display: flex;
+    align-items: center;
+    opacity: 0;
+    animation: slideIn 1.2s forwards ease-in-out 0.5s; /* Slide-in animation */
+}
+
+/* Slide-in animation for navbar items */
+@keyframes slideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Navbar Links */
+nav > ul > li > .navbar-link {
     text-decoration: none;
     font-size: 20px;
-    padding: 7px 18px;
+    padding: 10px 20px; /* Adjusted padding for a better feel */
     color: white;
-    background-color: var(--action-color);
-    border-radius: 2px;
+    background: linear-gradient(90deg, var(--action-color) 0%, var(--information-color) 100%); /* Gradient background */
+    border-radius: 30px; /* More rounded edges for a modern look */
+    transition: background 0.4s ease, transform 0.3s ease, box-shadow 0.4s ease; /* Smooth transitions */
+    position: relative;
+    overflow: hidden;
 }
-nav > ul > li > .navbar-link:hover{
-    background-color: var(--information-color);
+
+/* Hover Effect */
+nav > ul > li > .navbar-link:hover {
+    transform: scale(1.05); /* Slight scaling on hover */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Enhanced glow on hover */
 }
-.title{
+
+/* Title Styling */
+.title {
+    font-size: 2rem;
+    font-weight: bold;
     color: var(--action-color);
+    transition: transform 0.3s ease, color 0.3s ease;
+    animation: fadeInLeft 0.8s ease-out; /* Fade-in from left */
 }
+
+/* Title Hover Effect */
+.title:hover {
+    color: var(--information-color); /* Change color on hover */
+    transform: scale(1.05); /* Slight scale on hover */
+}
+
+/* Animation for Fade-in from Left */
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Login Button Animation */
+.navbar-link {
+    position: relative;
+    display: inline-block;
+    padding: 10px 25px;
+    font-size: 18px;
+    color: white;
+    border: none; /* Remove border */
+    background: transparent; /* Remove background */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.4s ease; /* Transition for all properties */
+    overflow: hidden;
+    z-index: 1;
+}
+
+/* Hover Effect for Login Button */
+.navbar-link:hover {
+    color: white; /* Maintain text color */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Glow effect */
+    transform: scale(1.1); /* Zoom-in effect on hover */
+    transition: all 0.4s ease;
+}
+
+/* Button Inner Glow Animation */
+.navbar-link::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3), rgba(0, 0, 0, 0.1));
+    transform: translate(-50%, -50%) scale(0); /* Initially hidden */
+    transition: opacity 0.6s ease, transform 0.6s ease; /* Transition for opacity and scale */
+    opacity: 0;
+    z-index: -1;
+}
+
+/* Glow on hover */
+.navbar-link:hover::before {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1); /* Scale effect on hover */
+}
+
+/* Media Queries */
 @media only screen and (max-width: 900px) {
-    .title{
+    .title {
         font-size: 1.5rem;
     }
-
-    .navbar-backside-frame{
+    .navbar-backside-frame {
         height: 63px;
     }
 }
 
-
 @media only screen and (max-width: 500px) {
-    .navbar-backside-frame{
+    .navbar-backside-frame {
         height: 67px;
     }
 }
