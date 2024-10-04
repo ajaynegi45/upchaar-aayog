@@ -11,8 +11,8 @@
     background-color: rgba(249, 250, 253, 0.9); /* Semi-transparent background */
     backdrop-filter: saturate(180%) blur(12px); /* Gentle blur for a frosted glass effect */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); /* Lighter shadow for modern touch */
-    animation: slideDown 0.8s ease-out; /* Smooth slide down */
-    transition: all 0.3s ease; /* Smoother transitions for interactivity */
+    animation: slideDown 0.3s ease-out; /* Faster slide down */
+    transition: all 0.15s ease; /* Faster transitions for interactivity */
 }
 
 /* Slide-down animation from top */
@@ -50,7 +50,7 @@ nav > ul > li > .navbar-link {
     color: white;
     background: linear-gradient(90deg, var(--action-color), var(--information-color)); /* Gradient background */
     border-radius: 30px;
-    transition: all 0.3s ease; /* Smoother transition */
+    transition: all 0.15s ease; /* Faster transition */
     text-decoration: none;
     display: inline-block;
     position: relative;
@@ -74,7 +74,7 @@ nav > ul > li > .navbar-link:hover {
     width: 0%;
     height: 100%;
     background: rgba(255, 255, 255, 0.2);
-    transition: width 0.3s ease;
+    transition: width 0.15s ease; /* Faster animation */
 }
 
 .navbar-link:hover::before {
@@ -87,7 +87,7 @@ nav > ul > li > .navbar-link:hover {
     font-weight: 700;
     color: var(--action-color);
     letter-spacing: 1px;
-    transition: transform 0.3s ease, color 0.3s ease; /* Smooth transitions */
+    transition: transform 0.15s ease, color 0.15s ease; /* Faster transitions */
 }
 
 /* Hover effect for Title */
