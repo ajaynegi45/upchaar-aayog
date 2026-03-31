@@ -61,13 +61,13 @@ const INITIAL_STORES: KendraStore[] = [
     name: "Pradhan Mantri Jan Aushadhi Kendra",
     address: "Jan AushadhiIndian Medical Association(IMA) House Indraprastha Marg",
     distance: "1.2 km",
-    status: "Open now",
+    status: "Likely open",
   },
   {
     name: "Shusrut Pmb Jan Aushadhi Kendra",
     address: "G143/S-3 KH No 1076/5/2 Dilshad Ext1 Dilshad Colony Tel Seemapuri",
     distance: "2.1 km",
-    status: "Closing soon",
+    status: "Closed",
   },
   {
     name: "Bharat Madical Store",
