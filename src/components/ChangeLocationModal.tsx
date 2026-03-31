@@ -1,11 +1,12 @@
 "use client";
 
 import React, { useState, useEffect, useMemo, useCallback } from "react";
+import { useSearchStore } from "@/store/useSearchStore";
 
 interface ChangeLocationModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onConfirm: (location: { state: string; district: string; pincode: string }) => void;
+  onConfirm?: (location: { state: string; district: string; pincode: string }) => void;
 }
 
 // Sample States & Districts mapping (add all 28 states + 8 UTs + ~900 districts as needed)
@@ -18,18 +19,31 @@ const STATE_DISTRICT_MAP: Record<string, string[]> = {
 };
 
 export default function ChangeLocationModal({ isOpen, onClose, onConfirm }: ChangeLocationModalProps) {
+  const { location, setLocation } = useSearchStore();
   const states = useMemo(() => Object.keys(STATE_DISTRICT_MAP), []);
-  const [state, setState] = useState(states[0]);
-  const [district, setDistrict] = useState(STATE_DISTRICT_MAP[states[0]][0]);
-  const [pincode, setPincode] = useState("");
+  
+  const [state, setState] = useState(location.state);
+  const [district, setDistrict] = useState(location.district);
+  const [pincode, setPincode] = useState(location.pincode);
   const [detecting, setDetecting] = useState(false);
+
+  // Synchronize internal state when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      setState(location.state);
+      setDistrict(location.district);
+      setPincode(location.pincode);
+    }
+  }, [isOpen, location]);
 
   const districts = useMemo(() => STATE_DISTRICT_MAP[state] || [], [state]);
 
-  // Update district when state changes
+  // Update district when state changes if current district doesn't belong to new state
   useEffect(() => {
-    setDistrict(districts[0] || "");
-  }, [districts]);
+    if (!districts.includes(district)) {
+      setDistrict(districts[0] || "");
+    }
+  }, [districts, district]);
 
   // ESC key to close
   useEffect(() => {
@@ -47,26 +61,25 @@ export default function ChangeLocationModal({ isOpen, onClose, onConfirm }: Chan
   };
 
   const gotLocation = (position: GeolocationPosition) => {
-    console.log(position);
     setDetecting(false);
 
-    // Example: you can extract coords if needed
-    const { latitude, longitude } = position.coords;
-    console.log(latitude, longitude);
-
+    // In a real app, reverse geocode here
     setState("Delhi");
     setDistrict("Rohini");
     setPincode("110085");
   };
+
   const handleDetectLocation = useCallback(() => {
     setDetecting(true);
     navigator.geolocation.getCurrentPosition(gotLocation, failedToGetLocation);
   }, []);
 
   const handleConfirm = useCallback(() => {
-    onConfirm({ state, district, pincode });
+    const newLocation = { state, district, pincode };
+    setLocation(newLocation);
+    if (onConfirm) onConfirm(newLocation);
     onClose();
-  }, [state, district, pincode, onConfirm, onClose]);
+  }, [state, district, pincode, setLocation, onConfirm, onClose]);
 
   if (!isOpen) return null;
 
