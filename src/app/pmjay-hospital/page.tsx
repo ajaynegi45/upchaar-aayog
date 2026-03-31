@@ -1,19 +1,9 @@
 "use client";
 
-import type { Metadata } from "next";
 import HospitalCard from "@/components/HospitalCard";
-import React, { useState } from "react";
+import { useState } from "react";
 import ChangeLocationModal from "@/components/ChangeLocationModal";
 import { useSearchStore } from "@/store/useSearchStore";
-
-// export const metadata: Metadata = {
-//   title: "Ayushman Care | Find Hospitals Near You",
-//   description: "Locate Ayushman Bharat empanelled hospitals for free treatment. Access quality healthcare near you instantly.",
-//   openGraph: {
-//     title: "Ayushman Care | Find Hospitals Near You",
-//     description: "Find free treatment and Ayushman Bharat hospitals nearby.",
-//   },
-// };
 
 export default function HospitalPage() {
 

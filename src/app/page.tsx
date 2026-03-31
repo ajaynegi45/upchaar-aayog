@@ -1,4 +1,5 @@
 import MedicineSearch from "@/components/MedicineSearch";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -30,14 +31,14 @@ export default function Home() {
                   aria-label="Search Jan Aushadhi Kendra"
               />
 
-              <button className="hidden md:block bg-primary text-on-primary px-6 py-3 rounded-lg font-bold whitespace-nowrap hover:bg-primary-dim transition-all shadow-sm active:scale-95 cursor-pointer">
+              <Link href="/jan-aushadhi-kendra" className="hidden md:block bg-primary text-on-primary px-6 py-3 rounded-lg font-bold whitespace-nowrap hover:bg-primary-dim transition-all shadow-sm active:scale-95 cursor-pointer">
                 Find Kendra
-              </button>
+              </Link> 
             </div>
 
-            <button className="md:hidden w-full mt-3 bg-primary text-on-primary px-6 py-2 rounded-lg font-bold whitespace-nowrap hover:bg-primary-dim transition-all shadow-sm cursor-pointer">
+            <Link href="/jan-aushadhi-kendra" className="md:hidden w-full mt-3 bg-primary text-on-primary px-6 py-2 rounded-lg font-bold whitespace-nowrap hover:bg-primary-dim transition-all shadow-sm cursor-pointer">
               Find Kendra
-            </button>
+            </Link>
           </div>
           <div className="flex items-center justify-center gap-2 text-on-surface-variant/70 text-sm font-medium">
             <span
@@ -99,124 +100,6 @@ export default function Home() {
           </article>
         </div>
       </section>
-
-      {/* Centres Near You */}
-      {/*<section className="bg-surface-container-low py-24 px-6" aria-labelledby="centres-heading">*/}
-      {/*  <div className="max-w-7xl mx-auto">*/}
-      {/*    <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">*/}
-      {/*      <div>*/}
-      {/*        <h2 id="centres-heading" className="font-headline text-3xl font-extrabold text-on-surface">*/}
-      {/*          Centres Near You*/}
-      {/*        </h2>*/}
-      {/*        <p className="text-on-surface-variant">*/}
-      {/*          Nearest options based on your location*/}
-      {/*        </p>*/}
-      {/*      </div>*/}
-      {/*      <nav className="flex flex-wrap gap-2" aria-label="Centre type filter">*/}
-      {/*        <button className="px-4 py-2 bg-primary text-on-primary rounded-full text-sm font-semibold shadow-sm focus:ring-2 focus:ring-primary focus:ring-offset-2">*/}
-      {/*          All*/}
-      {/*        </button>*/}
-      {/*        <button className="px-4 py-2 bg-surface-container-highest text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container transition-colors rounded-full text-sm font-medium focus:ring-2 focus:ring-primary focus:ring-offset-2">*/}
-      {/*          Low-Cost Medicines*/}
-      {/*        </button>*/}
-      {/*        <button className="px-4 py-2 bg-surface-container-highest text-on-surface-variant hover:bg-secondary-container hover:text-on-secondary-container transition-colors rounded-full text-sm font-medium focus:ring-2 focus:ring-primary focus:ring-offset-2">*/}
-      {/*          Free Treatment*/}
-      {/*        </button>*/}
-      {/*      </nav>*/}
-      {/*    </div>*/}
-      {/*    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">*/}
-      {/*      <div className="space-y-6">*/}
-      {/*        /!* Card 1: Jan Aushadhi *!/*/}
-      {/*        <div className="bg-surface-container-lowest p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-primary/5 bg-gradient-to-r from-primary-container/5 to-transparent">*/}
-      {/*          <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">*/}
-      {/*            <div className="flex gap-4">*/}
-      {/*              <div className="flex-shrink-0 w-12 h-12 bg-primary-container rounded-xl flex items-center justify-center">*/}
-      {/*                <span className="material-symbols-outlined text-on-primary-container" aria-hidden="true">*/}
-      {/*                  local_pharmacy*/}
-      {/*                </span>*/}
-      {/*              </div>*/}
-      {/*              <div>*/}
-      {/*                <div className="flex items-center gap-2 mb-1">*/}
-      {/*                  <h4 className="font-bold text-on-surface text-lg">*/}
-      {/*                    Jan Aushadhi Kendra*/}
-      {/*                  </h4>*/}
-      {/*                  <span className="px-2 py-0.5 bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-wider rounded">*/}
-      {/*                    Low Cost*/}
-      {/*                  </span>*/}
-      {/*                </div>*/}
-      {/*                <p className="text-primary font-bold text-sm mb-1">*/}
-      {/*                  1.2 km away*/}
-      {/*                </p>*/}
-      {/*                <p className="text-on-surface-variant text-sm">*/}
-      {/*                  Low-cost medicines available*/}
-      {/*                </p>*/}
-      {/*              </div>*/}
-      {/*            </div>*/}
-      {/*            <div className="flex sm:flex-col gap-2">*/}
-      {/*              <button className="flex-1 sm:flex-none px-4 py-2 bg-primary text-on-primary text-xs font-bold rounded-lg hover:bg-primary-dim transition-colors">*/}
-      {/*                Get Directions*/}
-      {/*              </button>*/}
-      {/*            </div>*/}
-      {/*          </div>*/}
-      {/*        </div>*/}
-
-      {/*        /!* Card 2: Hospital *!/*/}
-      {/*        <div className="bg-surface-container-lowest p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-secondary/5 bg-gradient-to-r from-secondary-container/5 to-transparent">*/}
-      {/*          <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">*/}
-      {/*            <div className="flex gap-4">*/}
-      {/*              <div className="flex-shrink-0 w-12 h-12 bg-secondary-container rounded-xl flex items-center justify-center">*/}
-      {/*                <span className="material-symbols-outlined text-on-secondary-container" aria-hidden="true">*/}
-      {/*                  local_hospital*/}
-      {/*                </span>*/}
-      {/*              </div>*/}
-      {/*              <div>*/}
-      {/*                <div className="flex items-center gap-2 mb-1">*/}
-      {/*                  <h4 className="font-bold text-on-surface text-lg">*/}
-      {/*                    Hospital (Ayushman)*/}
-      {/*                  </h4>*/}
-      {/*                  <span className="px-2 py-0.5 bg-secondary/10 text-secondary text-[10px] font-bold uppercase tracking-wider rounded">*/}
-      {/*                    Free Treatment*/}
-      {/*                  </span>*/}
-      {/*                </div>*/}
-
-      {/*                <p className="text-on-surface-variant text-sm">*/}
-      {/*                  Free treatment (if eligible)*/}
-      {/*                </p>*/}
-      {/*              </div>*/}
-      {/*            </div>*/}
-      {/*            <div className="flex sm:flex-col gap-2 justify-center">*/}
-      {/*              <p className="text-secondary font-bold text-sm mb-1">*/}
-      {/*                2.5 km away*/}
-      {/*              </p>*/}
-      {/*              <button className="flex-1 sm:flex-none px-4 py-2 bg-secondary text-on-secondary text-xs font-bold rounded-lg hover:bg-secondary-dim transition-colors">*/}
-      {/*                Get Directions*/}
-      {/*              </button>*/}
-      {/*            </div>*/}
-      {/*          </div>*/}
-      {/*        </div>*/}
-      {/*      </div>*/}
-
-      {/*      /!* Map Image container with ARIA role *!/*/}
-      {/*      <div */}
-      {/*        className="rounded-2xl overflow-hidden shadow-xl aspect-square md:aspect-video lg:aspect-square relative group border border-on-surface/5"*/}
-      {/*        role="img" */}
-      {/*        aria-label="Map showing nearby Jan Aushadhi and Hospital centres in New Delhi"*/}
-      {/*      >*/}
-      {/*        <img*/}
-      {/*          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"*/}
-      {/*          alt="Map interface with digital markers"*/}
-      {/*          src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaCf6AL2qZ1KDuGPcqXbbEsJ1JviVdXPUprEAV6s9XcaKTv1wEGGoQLqkzmqDqBzXitu9ss7PcbXHpCS9_QH12OZVhqDeUDKDjdld9jXt51EF9k2sedwWZJojBG48-9C_PDtojLDhP_N8f-iqtUfFw3ZikbtrXp9LVGmfVa5l8J4XxTRaH_1X2s0QJalp8okxSc9vu5kwT6ak4HvSPJM5PHfRWiV5d-GBV1Tk-BfeHD6gq3eLHL0_uYEt9YBoN_k2ZH9649ETj84A"*/}
-      {/*        />*/}
-      {/*        <div className="absolute inset-0 bg-primary/5 pointer-events-none" />*/}
-      {/*        <div className="absolute top-4 right-4 bg-surface-container-lowest/90 backdrop-blur-md p-3 rounded-lg shadow-lg">*/}
-      {/*          <span className="material-symbols-outlined text-primary" aria-hidden="true">*/}
-      {/*            my_location*/}
-      {/*          </span>*/}
-      {/*        </div>*/}
-      {/*      </div>*/}
-      {/*    </div>*/}
-      {/*  </div>*/}
-      {/*</section>*/}
 
       {/* Info Sections */}
       <section className="py-24 px-6 max-w-7xl mx-auto space-y-32">

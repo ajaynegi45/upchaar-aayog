@@ -2,20 +2,8 @@
 import StoreCard from "@/components/StoreCard";
 import KendraMapView from "@/components/KendraMapView";
 import ChangeLocationModal from "@/components/ChangeLocationModal";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useSearchStore } from "@/store/useSearchStore";
-import { Metadata } from "next";
-
-
-// export const metadata: Metadata = {
-//   title: "Jan Aushadhi Stores Near You | Upchaar Aayog",
-//   description: "Find the nearest Jan Aushadhi stores for low-cost generic medicines. Get directions and store details instantly.",
-//   openGraph: {
-//     title: "Jan Aushadhi Stores Near You | Upchaar Aayog",
-//     description: "Locate affordable healthcare and low-cost medicines nearby."
-//   },
-// };
-
 
 export default function KendraPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
