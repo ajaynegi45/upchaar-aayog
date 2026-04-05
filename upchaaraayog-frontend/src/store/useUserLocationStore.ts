@@ -9,7 +9,7 @@ interface UserLocationState {
 export const useUserLocationStore = create<UserLocationState>((set) => ({
   location: {
     state: "Delhi",
-    district: "West",
+    district: "South",
     pincode: "",
   },
   setLocation: (location) => set({ location }),
