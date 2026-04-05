@@ -113,7 +113,7 @@ export default function ChangeLocationModal({ isOpen, onClose, onConfirm }: Chan
           <div className="px-8 pb-10 space-y-8">
 
             {/* Fastest Option */}
-            <section>
+            {/* <section>
               <label className="text-[10px] font-black uppercase tracking-[0.2em] text-outline mb-4 block opacity-60">
                 Fastest Option
               </label>
@@ -132,16 +132,16 @@ export default function ChangeLocationModal({ isOpen, onClose, onConfirm }: Chan
                 </span>
                 <span>{detecting ? "Detecting..." : "Use Current Location"}</span>
               </button>
-            </section>
+            </section> */}
 
             {/* Divider */}
-            <div className="flex items-center gap-6">
+            {/* <div className="flex items-center gap-6">
               <div className="h-px flex-grow bg-outline-variant/15"></div>
               <span className="text-[9px] font-black text-outline uppercase tracking-[0.3em] opacity-40 whitespace-nowrap">
                 Or enter manually
               </span>
               <div className="h-px flex-grow bg-outline-variant/15"></div>
-            </div>
+            </div> */}
 
             {/* Manual Entry */}
             <section className="space-y-6">
