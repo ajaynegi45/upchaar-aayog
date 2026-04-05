@@ -28,7 +28,7 @@ export const useLocationStore = create<LocationStoreState>((set, get) => ({
 
     set({ isLoadingStates: true, error: null });
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/states`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/states`);
       if (!response.ok) throw new Error("Failed to fetch states");
       const data = await response.json();
       set({ states: data });
@@ -47,7 +47,7 @@ export const useLocationStore = create<LocationStoreState>((set, get) => ({
 
     set({ isLoadingDistricts: true, error: null });
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/states/${stateName}/districts`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/states/${stateName}/districts`);
       if (!response.ok) throw new Error("Failed to fetch districts");
       const data = await response.json();
       set((state) => ({
