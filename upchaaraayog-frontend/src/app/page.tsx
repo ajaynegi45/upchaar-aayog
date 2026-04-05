@@ -20,7 +20,7 @@ export default function Home() {
           </p>
 
           <div className="relative max-w-2xl mx-auto mb-8">
-            <div className="flex items-center bg-surface-container-lowest rounded-xl shadow-[0_32px_48px_rgba(45,52,51,0.04)] pl-3 pr-2 py-1">
+            <div className="hidden md:flex items-center  bg-surface-container-lowest rounded-xl shadow-[0_32px_48px_rgba(45,52,51,0.04)] pl-3 pr-2 py-1"> 
 
               <span className="material-symbols-outlined text-outline mr-2" aria-hidden="true">search</span>
 
@@ -36,11 +36,11 @@ export default function Home() {
               </Link> 
             </div>
 
-            <Link href="/jan-aushadhi-kendra" className="md:hidden w-full mt-3 bg-primary text-on-primary px-6 py-2 rounded-lg font-bold whitespace-nowrap hover:bg-primary-dim transition-all shadow-sm cursor-pointer">
+            <Link href="/jan-aushadhi-kendra" className="md:hidden mt-1 bg-primary text-on-primary px-10 py-3 md:px-15 md:py-4 md:text-lg  rounded-lg font-bold whitespace-nowrap hover:bg-primary-dim transition-all shadow-sm cursor-pointer">
               Find Kendra
             </Link>
           </div>
-          <div className="flex items-center justify-center gap-2 text-on-surface-variant/70 text-sm font-medium">
+          <div className="flex items-start justify-center gap-2 text-on-surface-variant/70 text-sm font-medium ">
             <span
               className="material-symbols-outlined text-primary scale-75"
               style={{ fontVariationSettings: '"FILL" 1' }}

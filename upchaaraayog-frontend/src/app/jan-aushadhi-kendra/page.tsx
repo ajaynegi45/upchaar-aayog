@@ -64,7 +64,7 @@ export default function KendraPage() {
             onConfirm={handleLocationConfirm}
           />
 
-          <nav className="flex items-center gap-3" aria-label="Filters">
+          {/* <nav className="flex items-center gap-3" aria-label="Filters">
             <button
               type="button"
               onClick={() => toggleFilter('nearest')}
@@ -86,7 +86,7 @@ export default function KendraPage() {
             >
               Open Now
             </button>
-          </nav>
+          </nav> */}
         </div>
       </section>
 
