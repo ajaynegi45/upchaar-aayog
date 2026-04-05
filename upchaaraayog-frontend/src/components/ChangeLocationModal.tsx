@@ -110,7 +110,7 @@ export default function ChangeLocationModal({ isOpen, onClose, onConfirm }: Chan
             </p>
           </div>
 
-          <div className="px-8 pb-10 space-y-8">
+          <div className="px-8 pb-10 space-y-6">
 
             {/* Fastest Option */}
             {/* <section>
@@ -149,7 +149,7 @@ export default function ChangeLocationModal({ isOpen, onClose, onConfirm }: Chan
               {/* Responsive State + District */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 {/* State */}
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-1.5">
                   <label className="text-[11px] font-bold text-on-surface/80 ml-1 uppercase tracking-wider">
                     State
                   </label>
@@ -158,7 +158,7 @@ export default function ChangeLocationModal({ isOpen, onClose, onConfirm }: Chan
                       value={selectedStateName}
                       onChange={(e) => handleStateChange(e.target.value)}
                       disabled={isLoadingStates}
-                      className="custom-select w-full h-14 bg-surface-container-high border-2 border-transparent rounded-xl px-5 pr-12 text-sm font-bold text-on-surface focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all outline-none cursor-pointer hover:bg-surface-variant"
+                      className="custom-select w-full h-12 bg-surface-container-high border-2 border-transparent rounded-xl px-4 pr-10 text-sm font-bold text-on-surface focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all outline-none cursor-pointer hover:bg-surface-variant disabled:opacity-50"
                     >
                       <option value="" disabled>{isLoadingStates ? "Loading..." : "Select State"}</option>
                       {states.map((s) => (
@@ -172,7 +172,7 @@ export default function ChangeLocationModal({ isOpen, onClose, onConfirm }: Chan
                 </div>
 
                 {/* District */}
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-1.5">
                   <label className="text-[11px] font-bold text-on-surface/80 ml-1 uppercase tracking-wider">
                     District
                   </label>
@@ -181,7 +181,7 @@ export default function ChangeLocationModal({ isOpen, onClose, onConfirm }: Chan
                       value={effectiveDistrict}
                       onChange={(e) => setDistrict(e.target.value)}
                       disabled={!selectedStateName || isLoadingDistricts}
-                      className="custom-select w-full h-14 bg-surface-container-high border-2 border-transparent rounded-xl px-5 pr-12 text-sm font-bold text-on-surface focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all outline-none cursor-pointer hover:bg-surface-variant"
+                      className="custom-select w-full h-12 bg-surface-container-high border-2 border-transparent rounded-xl px-4 pr-10 text-sm font-bold text-on-surface focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all outline-none cursor-pointer hover:bg-surface-variant disabled:opacity-50"
                     >
                       <option value="" disabled>{isLoadingDistricts ? "Loading..." : "Select District"}</option>
                       {districts.map((d) => (
@@ -195,14 +195,14 @@ export default function ChangeLocationModal({ isOpen, onClose, onConfirm }: Chan
                 </div>
               </div>
 
-              {/* Divider */}
-              <div className="flex items-center gap-6">
-                <div className="h-px flex-grow bg-outline-variant/15"></div>
-                <span className="text-[9px] font-black text-outline uppercase tracking-[0.3em] opacity-40 whitespace-nowrap">
+            {/* Divider */}
+            <div className="flex items-center gap-4 py-2">
+              <div className="h-px flex-grow bg-outline-variant/15"></div>
+              <span className="text-[9px] font-black text-outline uppercase tracking-[0.3em] opacity-40 whitespace-nowrap">
                 Or enter pincode
               </span>
-                <div className="h-px flex-grow bg-outline-variant/15"></div>
-              </div>
+              <div className="h-px flex-grow bg-outline-variant/15"></div>
+            </div>
 
               {/* Pincode */}
               <div className="flex flex-col gap-2">
@@ -210,26 +210,26 @@ export default function ChangeLocationModal({ isOpen, onClose, onConfirm }: Chan
                 <input
                   type="text"
                   maxLength={6}
-                  placeholder="e.g. 122001"
+                  placeholder="e.g. 110001"
                   value={pincode}
                   onChange={(e) => setPincode(e.target.value.replace(/\D/g, ""))}
-                  className="w-full h-14 bg-surface-container-high border-2 border-transparent rounded-xl px-6 text-sm font-bold text-on-surface focus:ring-4 focus:ring-primary/10 focus:border-primary/20 transition-all outline-none placeholder:text-outline/40 hover:bg-surface-variant"
+                  className="w-full h-12 bg-surface-container-high border-2 border-transparent rounded-xl px-5 text-sm font-bold text-on-surface focus:ring-4 focus:ring-primary/10 focus:border-primary/20 transition-all outline-none placeholder:text-outline/40 hover:bg-surface-variant"
                 />
               </div>
             </section>
 
             {/* Actions */}
-            <div className="flex flex-col gap-3 pt-6">
+            <div className="flex flex-col gap-3 pt-6 border-t border-outline-variant/10">
               <button
                 onClick={handleConfirm}
-                disabled={!selectedStateName || !effectiveDistrict}
-                className="w-full py-5 bg-gradient-to-br from-primary to-primary-dim text-on-primary rounded-xl font-black shadow-xl shadow-primary/20 active:scale-[0.98] transition-all hover:shadow-2xl hover:brightness-105 hover:cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
+                disabled={(pincode.length !== 6) && (!selectedStateName || !effectiveDistrict)}
+                className="w-full py-4.5 bg-gradient-to-br from-primary to-primary-dim text-on-primary rounded-xl font-black shadow-xl shadow-primary/10 active:scale-[0.98] transition-all hover:shadow-2xl hover:brightness-105 hover:cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed disabled:shadow-none"
               >
                 Confirm Location
               </button>
               <button
                 onClick={onClose}
-                className="w-full py-4 text-on-surface-variant font-bold text-sm hover:text-on-surface hover:bg-surface-container hover:cursor-pointer transition-all rounded-xl"
+                className="w-full py-3 text-on-surface-variant font-bold text-sm hover:text-on-surface hover:bg-surface-container hover:cursor-pointer transition-all rounded-xl"
               >
                 Cancel
               </button>

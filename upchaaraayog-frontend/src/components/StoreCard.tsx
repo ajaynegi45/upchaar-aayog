@@ -1,7 +1,11 @@
-
 import { KendraStore } from "@/store/types";
+import { openInMaps } from "@/utils/mapUtils";
 
 export default function StoreCard({ name, status, address, state, district, pincode}: KendraStore) {
+    const handleGetDirections = () => {
+      openInMaps(`${address}, ${district}, ${state}, ${pincode}`);
+    };
+
     const getStatusStyles = (status: string) => {
       switch (status) {
         case "Open":
@@ -52,6 +56,7 @@ export default function StoreCard({ name, status, address, state, district, pinc
           <div className="mt-6 flex gap-3">
             <button 
               type="button" 
+              onClick={handleGetDirections}
               className="flex-1 py-2.5 rounded-lg bg-gradient-to-br from-primary to-primary-dim text-on-primary text-sm hover:cursor-pointer font-bold flex items-center justify-center gap-2 transition-all hover:shadow-md active:scale-95"
             >
               <span className="material-symbols-outlined text-[18px] ">directions</span>

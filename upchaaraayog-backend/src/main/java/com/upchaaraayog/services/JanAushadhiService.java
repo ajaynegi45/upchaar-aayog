@@ -19,11 +19,15 @@ public class JanAushadhiService {
 
     public Page<JanAushadhiKendraDTO> getJanAushadhiKendra(String state, String district, Integer pincode, short pageNumber, short pageSize) {
         Page<JanAushadhiKendra> entities;
-        if(pincode != null && pincode >= 100000 && pincode <= 999999) {
-            entities = janAushadhiRepository.findByStateAndDistrictAndPincode(state, district, pincode,  PageRequest.of(pageNumber, pageSize));
-        } else {
+
+        if (pincode != null && pincode >= 100000 && pincode <= 999999) {
+            entities = janAushadhiRepository.findByPincode(pincode, PageRequest.of(pageNumber, pageSize));
+        } else if (state != null && !state.isBlank() && district != null && !district.isBlank()) {
             entities = janAushadhiRepository.findByStateAndDistrict(state, district, PageRequest.of(pageNumber, pageSize));
+        } else {
+            throw new IllegalArgumentException("Either a valid 6-digit Pincode or both State and District must be provided.");
         }
+
         return entities.map(this::convertToDTO);
     }
 

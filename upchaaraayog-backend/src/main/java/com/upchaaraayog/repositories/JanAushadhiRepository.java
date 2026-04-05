@@ -13,6 +13,7 @@ public interface JanAushadhiRepository extends JpaRepository<JanAushadhiKendra, 
 
     Page<JanAushadhiKendra> findByStateAndDistrict( String state, String district, Pageable pageable);
     Page<JanAushadhiKendra> findByStateAndDistrictAndPincode( String state, String district, Integer pincode, Pageable pageable);
+    Page<JanAushadhiKendra> findByPincode(Integer pincode, Pageable pageable);
 
     @Query(" SELECT DISTINCT kendra.state FROM JanAushadhiKendra kendra ORDER BY kendra.state ")
     List<String> findAllStates();

@@ -20,8 +20,8 @@ public class JanAushadhiController {
 
     @GetMapping("/jan-aushadhi-kendra")
     public Page<JanAushadhiKendraDTO> getJanAushadhiKendra(
-            @RequestParam(required = true) String state,
-            @RequestParam(required = true) String district,
+            @RequestParam(required = false) String state,
+            @RequestParam(required = false) String district,
             @RequestParam(required = false) Integer pincode,
 
             @RequestParam(required = false, defaultValue = "0") short pageNumber,

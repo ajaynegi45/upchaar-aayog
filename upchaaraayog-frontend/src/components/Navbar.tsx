@@ -14,13 +14,13 @@ export default function Navbar() {
 
   return (
     <nav 
-      className="fixed top-0 w-full z-50 glass-nav shadow-[0_32px_48px_rgba(45,52,51,0.04)]"
+      className="fixed top-0 w-full z-50 bg-white border-b border-gray-100 h-16 sm:h-20"
       aria-label="Main Navigation"
     >
-      <div className="flex justify-between items-center px-8 h-20 max-w-7xl mx-auto font-headline tracking-tight">
+      <div className="flex justify-between items-center px-6 h-full max-w-7xl mx-auto">
         <Link 
           href="/" 
-          className="text-2xl font-bold text-primary hover:opacity-80 transition-opacity"
+          className="text-xl sm:text-2xl font-bold text-primary hover:opacity-80 transition-opacity whitespace-nowrap"
           onClick={() => setIsOpen(false)}
         >
           Upchaar Aayog
@@ -32,7 +32,7 @@ export default function Navbar() {
             <Link 
               key={link.href}
               href={link.href}
-              className="text-primary hover:border-b-2 border-primary pb-1 font-semibold hover:text-primary-dim transition-colors"
+              className="text-sm font-semibold text-gray-700 hover:text-primary transition-colors"
             >
               {link.label}
             </Link>
@@ -43,11 +43,11 @@ export default function Navbar() {
         <div className="md:hidden">
           <button 
             type="button"
-            className="p-2 text-primary hover:bg-primary/10 rounded-lg transition-colors z-50 relative"
+            className="p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors z-50 relative"
             aria-label={isOpen ? "Close Mobile Menu" : "Open Mobile Menu"}
             onClick={() => setIsOpen(!isOpen)}
           >
-            <span className="material-symbols-outlined text-3xl">
+            <span className="material-symbols-outlined text-2xl">
               {isOpen ? "close" : "menu"}
             </span>
           </button>
@@ -56,16 +56,16 @@ export default function Navbar() {
 
       {/* Mobile Menu Overlay */}
       <div 
-        className={`fixed inset-0 bg-surface/95 backdrop-blur-xl z-40 transition-all duration-300 md:hidden ${
+        className={`fixed inset-0 bg-white z-40 transition-all duration-300 md:hidden flex items-center justify-center ${
           isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none translate-y-[-10px]"
         }`}
       >
-        <div className="flex flex-col items-center justify-center h-full gap-8 px-8">
+        <div className="flex flex-col items-center justify-center w-full gap-8 px-6 text-center">
           {navLinks.map((link) => (
             <Link 
               key={link.href}
               href={link.href}
-              className="text-3xl font-headline font-black text-primary hover:text-primary-dim transition-colors"
+              className="text-2xl font-bold text-gray-900 hover:text-primary transition-colors"
               onClick={() => setIsOpen(false)}
             >
               {link.label}
@@ -74,7 +74,7 @@ export default function Navbar() {
           
           <Link 
             href="/"
-            className="mt-8 text-on-surface-variant font-bold text-sm tracking-widest uppercase opacity-60"
+            className="mt-4 text-gray-500 font-medium text-sm tracking-widest uppercase"
             onClick={() => setIsOpen(false)}
           >
             Home Page

@@ -1,13 +1,14 @@
 package com.upchaaraayog.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.UUID;
 
 @Entity
+@Table(name = "jan_aushadhi_kendra", indexes = {
+    @Index(name = "idx_pincode", columnList = "pincode"),
+    @Index(name = "idx_state_district", columnList = "state, district")
+})
 public class JanAushadhiKendra {
 
     @Id

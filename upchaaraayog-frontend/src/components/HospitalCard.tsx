@@ -1,3 +1,5 @@
+import { openInMaps } from "@/utils/mapUtils";
+
 interface HospitalCardProps {
   name: string;
   distance: string;
@@ -13,6 +15,9 @@ export default function HospitalCard({
   specialties,
   isAyushmanEligible = true,
 }: HospitalCardProps) {
+  const handleGetDirections = () => {
+    openInMaps(name);
+  };
   return (
     <article className="bg-surface-container-lowest p-8 rounded-2xl transition-all duration-300 group shadow-[0_2px_8px_rgba(0,0,0,0.04)] border border-transparent hover:border-secondary-container/50 hover:shadow-[0_32px_48px_rgba(45,52,51,0.04)] hover:-translate-y-1">
       <div className="flex flex-col md:flex-row justify-between items-start mb-6 gap-4">
@@ -59,6 +64,7 @@ export default function HospitalCard({
       <div className="grid grid-cols-1 sm:grid-cols-1 gap-4">
         <button
           type="button"
+          onClick={handleGetDirections}
           className="py-4 bg-gradient-to-br from-primary to-primary-dim text-on-primary rounded-xl font-bold text-sm shadow-sm active:scale-95 transition-all hover:shadow-md hover:cursor-pointer"
         >
           Get Directions
