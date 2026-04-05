@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect} from "react";
+import { useState, useEffect} from "react";
 import { useUserLocationStore } from "@/store/useUserLocationStore";
 import { useLocationStore } from "@/store/useLocationStore";
 
