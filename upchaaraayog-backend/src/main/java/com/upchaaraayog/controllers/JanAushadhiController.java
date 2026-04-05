@@ -1,6 +1,6 @@
 package com.upchaaraayog.controllers;
 
-import com.upchaaraayog.entities.JanAushadhiKendra;
+import com.upchaaraayog.dto.JanAushadhiKendraDTO;
 import com.upchaaraayog.services.JanAushadhiService;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +19,7 @@ public class JanAushadhiController {
 
 
     @GetMapping("/jan-aushadhi-kendra")
-    public Page<JanAushadhiKendra> getJanAushadhiKendra(
+    public Page<JanAushadhiKendraDTO> getJanAushadhiKendra(
             @RequestParam(required = true) String state,
             @RequestParam(required = true) String district,
             @RequestParam(required = false) Integer pincode,
