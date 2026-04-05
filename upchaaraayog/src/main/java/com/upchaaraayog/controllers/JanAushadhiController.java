@@ -2,7 +2,6 @@ package com.upchaaraayog.controllers;
 
 import com.upchaaraayog.entities.JanAushadhiKendra;
 import com.upchaaraayog.services.JanAushadhiService;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
