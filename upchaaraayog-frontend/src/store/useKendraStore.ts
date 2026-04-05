@@ -73,6 +73,7 @@ export const useKendraStore = create<KendraState>((set, get) => ({
 
       interface ApiContent {
         kendraName: string;
+        kendraCode: string,
         address: string;
         state: string;
         district: string;
@@ -81,6 +82,7 @@ export const useKendraStore = create<KendraState>((set, get) => ({
 
       const mappedResults: KendraStore[] = (data.content as ApiContent[]).map((kendra) => ({
         name: kendra.kendraName,
+        kendraCode: kendra.kendraCode,
         address: kendra.address,
         state: kendra.state,
         district: kendra.district,

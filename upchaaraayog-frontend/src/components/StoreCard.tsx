@@ -1,10 +1,12 @@
 import { KendraStore } from "@/store/types";
 import { openInMaps } from "@/utils/mapUtils";
 
-export default function StoreCard({ name, status, address, state, district, pincode}: KendraStore) {
+export default function StoreCard({ name, kendraCode, status, address, state, district, pincode}: KendraStore) {
     const handleGetDirections = () => {
-      openInMaps(`${address}, ${district}, ${state}, ${pincode}`);
+      openInMaps(`${name} jan aushadhi kendra, kendracode=${kendraCode}, ${address}, ${district}, ${state}, ${pincode}`);
     };
+
+    console.log(`${name} jan aushadhi kendra, kendracode=${kendraCode}, ${address}, ${district}, ${state}, ${pincode}`);
 
     const getStatusStyles = (status: string) => {
       switch (status) {
@@ -21,53 +23,58 @@ export default function StoreCard({ name, status, address, state, district, pinc
   };
 
   return (
-    <article className="bg-surface-container-lowest p-5 rounded-xl shadow-sm border border-outline-variant/10 group transition-all hover:bg-surface-container-low hover:shadow-md">
-      <div className="flex gap-4">
-        <div className="h-12 w-12 rounded-lg bg-primary-container/30 flex items-center justify-center shrink-0">
-          <span className="material-symbols-outlined text-primary text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>
-            medical_services
-          </span>
-        </div>
-        <div className="flex-1">
-          <div className="flex justify-between items-start">
-            <div>
-              <h3 className="font-headline font-semibold text-lg text-on-surface">{name}</h3>
-              <p className="text-sm text-on-surface-variant font-medium">{address}</p>
-              <p className="text-sm text-on-surface-variant font-medium">{district} • {state} • {pincode}</p>
-            </div>
-            {/*<span className="text-primary font-bold text-sm whitespace-nowrap">{distance}</span>*/}
-            {/*  <span className="px-3 py-1 rounded bg-secondary-container text-on-secondary-container text-[10px] rounded-xl whitespace-nowrap font-bold uppercase tracking-widest shadow-sm ">*/}
-            {/*    {distance}*/}
-            {/*  </span>*/}
+      <article className="max-w-[700px] w-full bg-surface-container-lowest p-4 rounded-xl border border-outline-variant/30 hover:shadow-sm transition hover:bg-primary-container/10 active:bg-primary-container/10">
+
+          <div className="flex gap-3">
+
+              {/* Icon */}
+              <div className="h-10 w-10 rounded-md bg-primary-container/30 flex items-center justify-center shrink-0">
+                  <span className="material-symbols-outlined text-primary text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}> medical_services</span>
+              </div>
+
+              {/* Content */}
+              <div className="flex-1 space-y-1">
+
+                  {/* Title + Status */}
+                  <div className="flex justify-between items-start">
+                      <div>
+                          <h3 className="font-semibold text-on-surface text-base leading-tight">
+                              {name}
+                          </h3>
+                          <p className="text-sm text-on-surface-variant mt-2 mb-2 font-bold">
+                              {kendraCode}
+                          </p>
+                      </div>
+
+                      <span className={`text-xs font-medium px-2 py-1 rounded-md ${getStatusStyles(status)}`}>
+          {status}
+        </span>
+                  </div>
+
+                  {/* Address */}
+                  <p className="text-sm text-on-surface-variant leading-snug">
+                      {address}, {district}, {state} {pincode}
+                  </p>
+
+                  {/* Location */}
+                  <p className="text-sm text-on-surface-variant">
+
+                  </p>
+
+              </div>
           </div>
-          
-          {/*<div className="mt-4 flex items-center gap-4">*/}
-          {/*  <div className="flex items-center gap-1.5" aria-label={`Status: ${status}`}>*/}
-          {/*    <span className={`w-2 h-2 rounded-full ${getStatusStyles(status)}`}></span>*/}
-          {/*    <span className="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">{status}</span>*/}
-          {/*  </div>*/}
-          {/*  /!*{isLowCost && (*!/*/}
-          {/*  /!*  <span className="px-2 py-0.5 rounded bg-secondary-container text-on-secondary-container text-[10px] font-bold uppercase tracking-widest shadow-sm">*!/*/}
-          {/*  /!*    Low Cost*!/*/}
-          {/*  /!*  </span>*!/*/}
-          {/*  /!*)}*!/*/}
-          {/*</div>*/}
-          
-          <div className="mt-6 flex gap-3">
-            <button 
-              type="button" 
-              onClick={handleGetDirections}
-              className="flex-1 py-2.5 rounded-lg bg-gradient-to-br from-primary to-primary-dim text-on-primary text-sm hover:cursor-pointer font-bold flex items-center justify-center gap-2 transition-all hover:shadow-md active:scale-95"
-            >
-              <span className="material-symbols-outlined text-[18px] ">directions</span>
-              Get Directions
-            </button>
-            <div className={`px-4 py-2.5 rounded-lg border ${getStatusStyles(status)} border-outline-variant/30  text-sm font-bold hover:bg-white hover:text-primary-dim transition-colors`}>
-              {status}
-            </div>
+
+          {/* Actions */}
+          <div className="mt-4 flex gap-2">
+              <button
+                  onClick={handleGetDirections}
+                  className="flex-1 py-2 rounded-md bg-primary text-on-primary text-sm font-medium hover:opacity-90 active:scale-95 transition flex items-center justify-center gap-1.5 hover:cursor-pointer"
+              >
+                  <span className="material-symbols-outlined text-[18px]">directions</span>
+                  Directions
+              </button>
           </div>
-        </div>
-      </div>
-    </article>
+
+      </article>
   );
 }

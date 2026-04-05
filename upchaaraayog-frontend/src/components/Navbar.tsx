@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import Image from "next/image";
+import favicon from "../favicon.svg";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,17 +16,19 @@ export default function Navbar() {
 
   return (
     <nav 
-      className="fixed top-0 w-full z-50 bg-white border-b border-gray-100 h-16 sm:h-20"
+      className="fixed top-0 w-full z-50 bg-white border-b border-gray-100 h-16 sm:h-20  md:bg-white/30  md:backdrop-blur-md md:border-white/20"
       aria-label="Main Navigation"
     >
       <div className="flex justify-between items-center px-6 h-full max-w-7xl mx-auto">
-        <Link 
+        <div className={"flex justify-center items-center hover:opacity-80"}>
+          <Image src={favicon.src} alt={""} width={"25"} height={"25"}/>
+          <Link
           href="/" 
-          className="text-xl sm:text-2xl font-bold text-primary hover:opacity-80 transition-opacity whitespace-nowrap"
+          className="text-xl sm:text-2xl font-bold text-[#016b5f]  transition-opacity whitespace-nowrap"
           onClick={() => setIsOpen(false)}
-        >
-          Upchaar Aayog
-        </Link>
+          >Upchaar Aayog
+          </Link>
+        </div>
         
         {/* Desktop Navigation */}
         <div className="hidden md:flex gap-8 items-center">
@@ -32,7 +36,7 @@ export default function Navbar() {
             <Link 
               key={link.href}
               href={link.href}
-              className="text-sm font-semibold text-gray-700 hover:text-primary transition-colors"
+              className="text-md font-semibold text-gray-700 hover:text-primary transition-colors"
             >
               {link.label}
             </Link>

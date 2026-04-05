@@ -8,6 +8,7 @@ export type StoreStatus = "Open" | "Likely open" | "Closed" | "Likely closed";
 
 export interface KendraStore {
   name: string;
+  kendraCode: string,
   address: string;
   state: string;
   district: string;

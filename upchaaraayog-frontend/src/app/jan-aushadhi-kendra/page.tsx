@@ -96,9 +96,9 @@ export default function KendraPage() {
       </section>
 
       {/* Main Content Area */}
-      <div className="flex flex-col md:flex-row gap-8 pb-12 mb-8 justify-center">
+      <div className="flex flex-col md:flex-row gap-8 pb-12 mb-8 justify-center items-center">
         {/* Left Column: Store Cards (Scrollable list) */}
-        <div className="w-full  space-y-4 md:overflow-y-auto md:pr-4 custom-scrollbar justify-center">
+        <div className="w-full  flex flex-col  space-y-4 md:overflow-y-auto md:pr-4 custom-scrollbar justify-center items-center">
           <h2 className="sr-only">Store List</h2>
 
           {error && (
