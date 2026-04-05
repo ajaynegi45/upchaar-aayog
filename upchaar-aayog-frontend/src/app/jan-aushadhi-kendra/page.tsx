@@ -1,8 +1,9 @@
 "use client";
+
 import StoreCard from "@/components/StoreCard";
 import KendraMapView from "@/components/KendraMapView";
 import ChangeLocationModal from "@/components/ChangeLocationModal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSearchStore } from "@/store/useSearchStore";
 
 export default function KendraPage() {
@@ -12,13 +13,31 @@ export default function KendraPage() {
     setLocation,
     kendraResults,
     filters,
-    toggleFilter
+    toggleFilter,
+    fetchKendraResults,
+    pagination,
+    isLoading,
+    error
   } = useSearchStore();
+
+  // Initial fetch on mount
+  useEffect(() => {
+    void fetchKendraResults(0);
+  }, [fetchKendraResults]);
 
   const handleLocationConfirm = (newLoc: { state: string; district: string; pincode: string }) => {
     setLocation(newLoc);
-    // In a real app, this would trigger a fetch with new coordinates/params
+    void fetchKendraResults(0); // Fetch for new location starting from first page
+    setIsModalOpen(false);
   };
+
+  const handleLoadMore = () => {
+    if (pagination.currentPage < pagination.totalPages - 1) {
+      void fetchKendraResults(pagination.currentPage + 1);
+    }
+  };
+
+  const hasMore = pagination.currentPage < pagination.totalPages - 1;
 
   return (
     <div className="max-w-7xl mx-auto w-full px-4 md:px-6">
@@ -37,7 +56,7 @@ export default function KendraPage() {
         <div className="flex flex-wrap items-center justify-between gap-4 py-2">
           <div className="flex items-center gap-2 bg-surface-container-low px-4 py-2.5 rounded-xl border border-outline-variant/10 shadow-sm">
             <span className="material-symbols-outlined text-primary text-sm" aria-hidden="true">location_on</span>
-            <span className="font-bold text-on-surface">{location.district} • {location.state} • {location.pincode}</span>
+            <span className="font-bold text-on-surface">{location.district} • {location.state}{location.pincode && ` • ${location.pincode}`}</span>
             <button
               type="button"
               onClick={() => setIsModalOpen(true)}
@@ -47,6 +66,7 @@ export default function KendraPage() {
           </div>
 
           <ChangeLocationModal
+            key={String(isModalOpen)}
             isOpen={isModalOpen}
             onClose={() => setIsModalOpen(false)}
             onConfirm={handleLocationConfirm}
@@ -57,8 +77,8 @@ export default function KendraPage() {
               type="button"
               onClick={() => toggleFilter('nearest')}
               className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold shadow-sm transition-all active:scale-95 ${filters.nearest
-                  ? "bg-primary-container text-on-primary-container hover:brightness-95"
-                  : "bg-surface-container-highest text-on-surface-variant hover:bg-surface-container-high"
+                ? "bg-primary-container text-on-primary-container hover:brightness-95"
+                : "bg-surface-container-highest text-on-surface-variant hover:bg-surface-container-high"
                 }`}
             >
               <span className="material-symbols-outlined text-[18px]">near_me</span>
@@ -68,8 +88,8 @@ export default function KendraPage() {
               type="button"
               onClick={() => toggleFilter('openNow')}
               className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold shadow-sm transition-all active:scale-95 ${filters.openNow
-                  ? "bg-primary-container text-on-primary-container hover:brightness-95"
-                  : "bg-surface-container-highest text-on-surface-variant hover:bg-surface-container-high"
+                ? "bg-primary-container text-on-primary-container hover:brightness-95"
+                : "bg-surface-container-highest text-on-surface-variant hover:bg-surface-container-high"
                 }`}
             >
               Open Now
@@ -79,27 +99,57 @@ export default function KendraPage() {
       </section>
 
       {/* Main Content Area */}
-      <div className="flex flex-col md:flex-row gap-8 pb-12 mb-8">
+      <div className="flex flex-col md:flex-row gap-8 pb-12 mb-8 justify-center">
         {/* Left Column: Store Cards (Scrollable list) */}
-        <div className="w-full md:w-[40%] space-y-4 md:overflow-y-auto md:pr-4 custom-scrollbar">
+        <div className="w-full  space-y-4 md:overflow-y-auto md:pr-4 custom-scrollbar justify-center">
           <h2 className="sr-only">Store List</h2>
+
+          {error && (
+            <div className="p-4 bg-error-container text-on-error-container rounded-xl flex items-center gap-3">
+              <span className="material-symbols-outlined">error</span>
+              <p className="font-medium">{error}</p>
+            </div>
+          )}
+
           {kendraResults.map((store, index) => (
             <StoreCard key={index} {...store} />
           ))}
 
-          {/* Load More Button (Simulated) */}
-          <button
-            type="button"
-            className="w-full py-4 border-2 border-dashed border-outline-variant/30 rounded-xl text-on-surface-variant font-bold text-sm hover:bg-surface-container-low hover:border-primary/30 transition-all active:scale-[0.99] hover:cursor-pointer"
-          >
-            Load 5 more stores
-          </button>
+          {isLoading && (
+            <div className="space-y-4">
+              {[1, 2].map((i) => (
+                <div key={i} className="h-32 bg-surface-container-low animate-pulse rounded-2xl border border-outline-variant/10" />
+              ))}
+            </div>
+          )}
+
+          {/* Load More Button */}
+          {hasMore && !isLoading && (
+            <button
+              type="button"
+              onClick={handleLoadMore}
+              className="w-full py-4 border-2 border-dashed border-outline-variant/30 rounded-xl text-on-surface-variant font-bold text-sm hover:bg-surface-container-low hover:border-primary/30 transition-all active:scale-[0.99] hover:cursor-pointer"
+            >
+              Load more stores
+            </button>
+          )}
+
+          {!hasMore && kendraResults.length > 0 && !isLoading && (
+            <p className="text-center text-on-surface-variant/60 text-sm py-4">No more stores found in this area</p>
+          )}
+
+          {!isLoading && kendraResults.length === 0 && !error && (
+            <div className="text-center py-12 space-y-3">
+              <span className="material-symbols-outlined text-4xl text-on-surface-variant/40">search_off</span>
+              <p className="text-on-surface-variant font-medium">No stores found for selected location</p>
+            </div>
+          )}
         </div>
 
         {/* Right Column: Map View */}
-        <div className="w-full md:w-[60%] sticky top-24 h-fit">
-          <KendraMapView />
-        </div>
+        {/*<div className="w-full md:w-[60%] sticky top-24 h-fit">*/}
+        {/*  <KendraMapView />*/}
+        {/*</div>*/}
       </div>
     </div>
   );

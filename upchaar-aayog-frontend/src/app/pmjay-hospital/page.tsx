@@ -48,6 +48,7 @@ export default function HospitalPage() {
           </div>
 
           <ChangeLocationModal
+            key={String(isModalOpen)}
             isOpen={isModalOpen}
             onClose={() => setIsModalOpen(false)}
             onConfirm={handleLocationConfirm}
@@ -58,8 +59,8 @@ export default function HospitalPage() {
               type="button"
               onClick={() => toggleFilter('nearest')}
               className={`flex-1 px-4 py-4 rounded-xl font-bold text-sm shadow-md transition-all outline-none focus:ring-4 focus:ring-primary/20 ${filters.nearest
-                  ? "bg-primary text-on-primary hover:bg-primary-dim"
-                  : "bg-surface-container-highest text-on-surface-variant hover:bg-surface-container-high"
+                ? "bg-primary text-on-primary hover:bg-primary-dim"
+                : "bg-surface-container-highest text-on-surface-variant hover:bg-surface-container-high"
                 }`}
             >
               Nearest
@@ -68,8 +69,8 @@ export default function HospitalPage() {
               type="button"
               onClick={() => toggleFilter('allHospitals')}
               className={`flex-1 px-4 py-4 rounded-xl font-bold text-sm transition-all outline-none focus:ring-4 focus:ring-on-surface/10 ${filters.allHospitals
-                  ? "bg-primary text-on-primary hover:bg-primary-dim shadow-md"
-                  : "bg-surface-container-highest text-on-surface-variant hover:bg-surface-container-high shadow-sm"
+                ? "bg-primary text-on-primary hover:bg-primary-dim shadow-md"
+                : "bg-surface-container-highest text-on-surface-variant hover:bg-surface-container-high shadow-sm"
                 }`}
             >
               All Hospitals

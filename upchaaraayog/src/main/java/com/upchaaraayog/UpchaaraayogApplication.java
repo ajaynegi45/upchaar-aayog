@@ -1,13 +1,13 @@
-package com.upchaar_aayog;
+package com.upchaaraayog;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class UpchaarAayogApplication {
+public class UpchaaraayogApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(UpchaarAayogApplication.class, args);
+		SpringApplication.run(UpchaaraayogApplication.class, args);
 	}
 
 }

@@ -1,10 +1,10 @@
-package com.upchaar_aayog;
+package com.upchaaraayog;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class UpchaarAayogApplicationTests {
+class UpchaaraayogApplicationTests {
 
 	@Test
 	void contextLoads() {

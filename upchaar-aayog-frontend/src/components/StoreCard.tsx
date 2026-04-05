@@ -1,20 +1,13 @@
-import Link from "next/link";
 
-interface StoreCardProps {
-  name: string;
-  distance: string;
-  status: "Open" | "Closed" | "Likely open" | "Closing soon" | "Open now";
-  address: string;
-  isLowCost?: boolean;
-}
+import { KendraStore } from "@/store/useSearchStore";
 
-export default function StoreCard({ name, distance, status, address, isLowCost = true }: StoreCardProps) {
+export default function StoreCard({ name, status, address, state, district, pincode}: KendraStore) {
     const getStatusStyles = (status: string) => {
       switch (status) {
         case "Open":
-        case "Open now":
+        case "Likely open":
           return "bg-emerald-500/10 text-emerald-600 border-emerald-500/30";
-        case "Closing soon":
+        case "Likely closed":
           return "bg-amber-500/10 text-amber-600 border-amber-500/30";
         case "Closed":
           return "bg-rose-500/10 text-rose-600 border-rose-500/30";
@@ -36,11 +29,12 @@ export default function StoreCard({ name, distance, status, address, isLowCost =
             <div>
               <h3 className="font-headline font-semibold text-lg text-on-surface">{name}</h3>
               <p className="text-sm text-on-surface-variant font-medium">{address}</p>
+              <p className="text-sm text-on-surface-variant font-medium">{district} • {state} • {pincode}</p>
             </div>
             {/*<span className="text-primary font-bold text-sm whitespace-nowrap">{distance}</span>*/}
-              <span className="px-3 py-1 rounded bg-secondary-container text-on-secondary-container text-[10px] rounded-xl whitespace-nowrap font-bold uppercase tracking-widest shadow-sm ">
-                {distance}
-              </span>
+            {/*  <span className="px-3 py-1 rounded bg-secondary-container text-on-secondary-container text-[10px] rounded-xl whitespace-nowrap font-bold uppercase tracking-widest shadow-sm ">*/}
+            {/*    {distance}*/}
+            {/*  </span>*/}
           </div>
           
           {/*<div className="mt-4 flex items-center gap-4">*/}
