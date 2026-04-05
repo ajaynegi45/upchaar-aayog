@@ -48,7 +48,12 @@ export default function KendraPage() {
         <div className="flex flex-wrap items-center justify-between gap-4 py-2">
           <div className="flex items-center gap-2 bg-surface-container-low px-4 py-2.5 rounded-xl border border-outline-variant/10 shadow-sm">
             <span className="material-symbols-outlined text-primary text-sm" aria-hidden="true">location_on</span>
-            <span className="font-bold text-on-surface">{location.district} • {location.state}{location.pincode && ` • ${location.pincode}`}</span>
+
+            <span className="font-bold text-on-surface">
+  {location.pincode
+    ? location.pincode
+    : `${location.district} • ${location.state}`}
+</span>
             <button
               type="button"
               onClick={() => setIsModalOpen(true)}
