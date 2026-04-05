@@ -10,15 +10,7 @@ import { useUserLocationStore } from "@/store/useUserLocationStore";
 export default function KendraPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { location, setLocation } = useUserLocationStore();
-  const {
-    kendraResults,
-    filters,
-    toggleFilter,
-    fetchKendraResults,
-    pagination,
-    isLoading,
-    error
-  } = useKendraStore();
+  const { kendraResults, filters, toggleFilter, fetchKendraResults, pagination, isLoading, error } = useKendraStore();
 
   // Initial fetch on mount
   useEffect(() => {
