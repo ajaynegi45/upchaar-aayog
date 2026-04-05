@@ -1,5 +1,5 @@
 
-import { KendraStore } from "@/store/useSearchStore";
+import { KendraStore } from "@/store/types";
 
 export default function StoreCard({ name, status, address, state, district, pincode}: KendraStore) {
     const getStatusStyles = (status: string) => {

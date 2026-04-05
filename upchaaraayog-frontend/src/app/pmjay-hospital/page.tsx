@@ -3,22 +3,23 @@
 import HospitalCard from "@/components/HospitalCard";
 import { useState } from "react";
 import ChangeLocationModal from "@/components/ChangeLocationModal";
-import { useSearchStore } from "@/store/useSearchStore";
+import { useHospitalStore } from "@/store/useHospitalStore";
+import { useUserLocationStore } from "@/store/useUserLocationStore";
 
 export default function HospitalPage() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { location, setLocation } = useUserLocationStore();
   const {
-    location,
-    setLocation,
     hospitalResults,
     filters,
-    toggleFilter
-  } = useSearchStore();
+    toggleFilter,
+    fetchHospitalResults
+  } = useHospitalStore();
 
   const handleLocationConfirm = (newLoc: { state: string; district: string; pincode: string }) => {
     setLocation(newLoc);
-    // In a real app, this would trigger a fetch with new coordinates/params
+    void fetchHospitalResults(newLoc);
   };
 
   return (

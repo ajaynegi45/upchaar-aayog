@@ -4,13 +4,13 @@ import StoreCard from "@/components/StoreCard";
 import KendraMapView from "@/components/KendraMapView";
 import ChangeLocationModal from "@/components/ChangeLocationModal";
 import { useState, useEffect } from "react";
-import { useSearchStore } from "@/store/useSearchStore";
+import { useKendraStore } from "@/store/useKendraStore";
+import { useUserLocationStore } from "@/store/useUserLocationStore";
 
 export default function KendraPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { location, setLocation } = useUserLocationStore();
   const {
-    location,
-    setLocation,
     kendraResults,
     filters,
     toggleFilter,
@@ -18,22 +18,22 @@ export default function KendraPage() {
     pagination,
     isLoading,
     error
-  } = useSearchStore();
+  } = useKendraStore();
 
   // Initial fetch on mount
   useEffect(() => {
-    void fetchKendraResults(0);
-  }, [fetchKendraResults]);
+    void fetchKendraResults(location, 0);
+  }, [fetchKendraResults, location]);
 
   const handleLocationConfirm = (newLoc: { state: string; district: string; pincode: string }) => {
     setLocation(newLoc);
-    void fetchKendraResults(0); // Fetch for new location starting from first page
+    void fetchKendraResults(newLoc, 0); // Fetch for new location starting from first page
     setIsModalOpen(false);
   };
 
   const handleLoadMore = () => {
     if (pagination.currentPage < pagination.totalPages - 1) {
-      void fetchKendraResults(pagination.currentPage + 1);
+      void fetchKendraResults(location, pagination.currentPage + 1);
     }
   };
 

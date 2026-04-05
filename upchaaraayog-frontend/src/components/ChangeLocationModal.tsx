@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect} from "react";
-import { useSearchStore } from "@/store/useSearchStore";
+import { useUserLocationStore } from "@/store/useUserLocationStore";
 import { useLocationStore } from "@/store/useLocationStore";
 
 interface ChangeLocationModalProps {
@@ -11,7 +11,7 @@ interface ChangeLocationModalProps {
 }
 
 export default function ChangeLocationModal({ isOpen, onClose, onConfirm }: ChangeLocationModalProps) {
-  const { location, setLocation } = useSearchStore();
+  const { location, setLocation } = useUserLocationStore();
   const { states, districtsByState, fetchStates, fetchDistricts, isLoadingStates, isLoadingDistricts } = useLocationStore();
   
   // Internal state now holds names directly as strings
