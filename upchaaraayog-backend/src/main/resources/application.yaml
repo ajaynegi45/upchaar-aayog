@@ -11,7 +11,7 @@ spring:
     url: ${DATABASE_URL:jdbc:postgresql://ep-billowing-violet-a19l32b7-pooler.ap-southeast-1.aws.neon.tech/upchaaraayog_db?sslmode=require&channel_binding=require}
     username: ${DATABASE_USERNAME:neondb_owner}
     password: ${DATABASE_PASSWORD:npg_BhfdzvEWt58e}
-#    driver-class-name: org.postgresql.Driver
+    driver-class-name: org.postgresql.Driver
 #    hikari:
 #      maximum-pool-size: 10
 #      idle-timeout: 30000
@@ -21,17 +21,30 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: false
-    open-in-view: false
     properties:
       hibernate:
-        format_sql: true
+        format_sql: false
         dialect: org.hibernate.dialect.PostgreSQLDialect
-#        jdbc:
-#          batch_size: 50 # Performance optimization for PDF ingestion
 
-#  flyway:
-#    enabled: true
-#    baseline-on-migrate: true
+        # ─── Second-Level Cache ───
+#        cache:
+#          use_second_level_cache: true
+#          use_query_cache: false     # query cache causes more issues than it solves
+##          region:
+##            factory_class: jcache
+        jakarta:
+          cache:
+            provider: org.ehcache.jsr107.EhcacheCachingProvider
+
+
+        # ── Hibernate Statistics (enable during load testing only) ────────────
+        # Exposes via Actuator: /actuator/metrics/hibernate.sessions.open
+        generate_statistics: false
+
+        # Open Session in View — DISABLE. This anti-pattern causes lazy loading in the
+        # view/controller layer, hiding N+1 bugs during development.
+        open-in-view: false
+
 
 logging:
   level:
@@ -40,15 +53,20 @@ logging:
     org.springframework.web: INFO
     org.hibernate.SQL: DEBUG
 
-#management:
-#  endpoints:
-#    web:
-#      exposure:
-#        include: health, info, metrics, prometheus
-#  endpoint:
-#    health:
-#      show-details: always
 
+# ── Actuator ───
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics, prometheus
+  endpoint:
+    health:
+      show-details: always
+
+
+
+# ── Server ───
 server:
   port: 8080
   shutdown: graceful # Operational excellence mandate
