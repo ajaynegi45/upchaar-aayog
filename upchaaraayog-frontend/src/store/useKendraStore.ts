@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { KendraStore, Pagination, StoreStatus, Location } from "./types";
+import { getApiBaseUrl } from "@/utils/api";
 
 interface KendraState {
   kendraResults: KendraStore[];
@@ -63,7 +64,7 @@ export const useKendraStore = create<KendraState>((set, get) => ({
         queryParams.append("pincode", location.pincode);
       }
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/jan-aushadhi-kendra?${queryParams.toString()}`);
+      const response = await fetch(`${getApiBaseUrl()}/api/v1/jan-aushadhi-kendra?${queryParams.toString()}`);
 
       if (!response.ok) {
         throw new Error("Failed to fetch stores");

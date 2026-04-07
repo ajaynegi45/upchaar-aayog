@@ -16,19 +16,20 @@ export default function Navbar() {
 
   return (
     <nav 
-      className="fixed top-0 w-full z-50 bg-white border-b border-gray-100 h-16 sm:h-20  md:bg-white/30  md:backdrop-blur-md md:border-white/20"
+      className="fixed top-0 w-full z-50 bg-white border-b border-gray-100 h-16 sm:h-20 md:bg-white/30 md:backdrop-blur-md md:border-white/20"
       aria-label="Main Navigation"
     >
-      <div className="flex justify-between items-center px-6 h-full max-w-7xl mx-auto">
-        <div className={"flex justify-center items-center hover:opacity-80"}>
-          <Image src={favicon.src} alt={""} width={"25"} height={"25"}/>
-          <Link
-          href="/" 
-          className="text-xl sm:text-2xl font-bold text-[#016b5f]  transition-opacity whitespace-nowrap"
+      <div className="relative flex justify-between items-center px-6 h-full max-w-7xl mx-auto">
+        <Link
+          href="/"
+          className="flex items-center gap-3 hover:opacity-80 z-[60] cursor-pointer"
           onClick={() => setIsOpen(false)}
-          >Upchaar Aayog
-          </Link>
-        </div>
+        >
+          <Image src={favicon} alt="Upchaar Aayog" width={32} height={32} />
+          <span className="text-xl sm:text-2xl font-bold text-[#016b5f] whitespace-nowrap">
+            Upchaar Aayog
+          </span>
+        </Link>
         
         {/* Desktop Navigation */}
         <div className="hidden md:flex gap-8 items-center">
@@ -44,12 +45,14 @@ export default function Navbar() {
         </div>
 
         {/* Mobile Toggle Button */}
-        <div className="md:hidden">
+        <div className="md:hidden relative z-[70]">
           <button 
             type="button"
-            className="p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors z-50 relative"
+            className="relative p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
             aria-label={isOpen ? "Close Mobile Menu" : "Open Mobile Menu"}
             onClick={() => setIsOpen(!isOpen)}
+            aria-expanded={isOpen}
+            aria-controls="mobile-menu"
           >
             <span className="material-symbols-outlined text-2xl">
               {isOpen ? "close" : "menu"}
@@ -60,6 +63,7 @@ export default function Navbar() {
 
       {/* Mobile Menu Overlay */}
       <div 
+        id="mobile-menu"
         className={`fixed inset-0 bg-white z-40 transition-all duration-300 md:hidden flex items-center justify-center ${
           isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none translate-y-[-10px]"
         }`}

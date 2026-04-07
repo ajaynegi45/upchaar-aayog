@@ -1,114 +1,156 @@
 "use client";
 
 import HospitalCard from "@/components/HospitalCard";
-import { useState } from "react";
-import ChangeLocationModal from "@/components/ChangeLocationModal";
+import HospitalFilters from "@/components/HospitalFilters";
 import { useHospitalStore } from "@/store/useHospitalStore";
-import { useUserLocationStore } from "@/store/useUserLocationStore";
+import { useEffect, useRef } from "react";
+import { useShallow } from "zustand/react/shallow";
 
 export default function HospitalPage() {
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const { location, setLocation } = useUserLocationStore();
   const {
     hospitalResults,
+    isLoading,
+    error,
+    pagination,
+    searchHospitals,
     filters,
-    toggleFilter,
-    fetchHospitalResults
-  } = useHospitalStore();
+    fetchStates,
+    fetchDistricts,
+    fetchRegionalMetadata
+  } = useHospitalStore(
+    useShallow((state) => ({
+      hospitalResults: state.hospitalResults,
+      isLoading: state.isLoading,
+      error: state.error,
+      pagination: state.pagination,
+      searchHospitals: state.searchHospitals,
+      filters: state.filters,
+      fetchStates: state.fetchStates,
+      fetchDistricts: state.fetchDistricts,
+      fetchRegionalMetadata: state.fetchRegionalMetadata,
+    }))
+  );
+  const hasInitialized = useRef(false);
 
-  const handleLocationConfirm = (newLoc: { state: string; district: string; pincode: string }) => {
-    setLocation(newLoc);
-    void fetchHospitalResults(newLoc);
+  useEffect(() => {
+    if (hasInitialized.current || !filters.state) {
+      return;
+    }
+
+    hasInitialized.current = true;
+
+    void fetchStates();
+    void fetchDistricts(filters.state);
+    void fetchRegionalMetadata(filters.state);
+    void searchHospitals(0);
+  }, [fetchDistricts, fetchRegionalMetadata, fetchStates, filters.state, searchHospitals]);
+
+  const handleLoadMore = () => {
+    if (pagination.currentPage < pagination.totalPages - 1) {
+      void searchHospitals(pagination.currentPage + 1);
+    }
   };
 
+  const hasMore = pagination.currentPage < pagination.totalPages - 1;
+  const hasResults = hospitalResults.length > 0;
+  const isStateSelected = !!filters.state;
+
   return (
-    <main className="max-w-3xl mx-auto px-6 pt-8 pb-24">
+    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-24">
       {/* Header Section */}
-      <div className="mb-12 text-center" aria-labelledby="hospital-title">
-        <h1
-          id="hospital-title"
-          className="text-4xl md:text-5xl font-headline font-extrabold text-on-surface leading-tight tracking-tight mb-4"
-        >
-          Ayushman Bharat <span className="text-primary-dark italic">Hospitals</span> Near You
+      <div className="mb-12 text-center prose prose-slate max-w-none">
+        <h1 className="text-4xl md:text-6xl font-headline font-black text-on-surface leading-[1.1] tracking-tight mb-4">
+          PMJAY <span className="text-primary italic">Hospitals</span>
         </h1>
-        <p className="text-lg text-on-surface-variant font-medium mb-8">
-          Find hospitals where eligible patients can receive free treatment
+        <p className="text-lg md:text-xl text-on-surface-variant font-medium max-w-2xl mx-auto leading-relaxed">
+          Find empanelled hospitals providing cashless treatment under Ayushman Bharat across India.
         </p>
-
-        <div className="flex flex-col md:flex-row items-center gap-4 justify-center">
-          <div className="flex items-center gap-2 bg-surface-container-low px-4 py-2.5 rounded-xl border border-outline-variant/10 shadow-sm">
-            <span className="material-symbols-outlined text-primary text-sm" aria-hidden="true">location_on</span>
-            <span className="font-bold text-on-surface">{location.district} • {location.state} • {location.pincode}</span>
-            <button
-              type="button"
-              onClick={() => setIsModalOpen(true)}
-              className="ml-2 text-primary text-sm font-bold hover:bg-primary-dim transition-all hover:cursor-pointer rounded-sm hover:text-white px-3 py-2">
-              Change Location
-            </button>
-          </div>
-
-          <ChangeLocationModal
-            key={String(isModalOpen)}
-            isOpen={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
-            onConfirm={handleLocationConfirm}
-          />
-
-          <nav className="flex gap-3 w-full md:w-auto" aria-label="Filters">
-            <button
-              type="button"
-              onClick={() => toggleFilter('nearest')}
-              className={`flex-1 px-4 py-4 rounded-xl font-bold text-sm shadow-md transition-all outline-none focus:ring-4 focus:ring-primary/20 ${filters.nearest
-                ? "bg-primary text-on-primary hover:bg-primary-dim"
-                : "bg-surface-container-highest text-on-surface-variant hover:bg-surface-container-high"
-                }`}
-            >
-              Nearest
-            </button>
-            <button
-              type="button"
-              onClick={() => toggleFilter('allHospitals')}
-              className={`flex-1 px-4 py-4 rounded-xl font-bold text-sm transition-all outline-none focus:ring-4 focus:ring-on-surface/10 ${filters.allHospitals
-                ? "bg-primary text-on-primary hover:bg-primary-dim shadow-md"
-                : "bg-surface-container-highest text-on-surface-variant hover:bg-surface-container-high shadow-sm"
-                }`}
-            >
-              All Hospitals
-            </button>
-          </nav>
-        </div>
       </div>
 
-      {/* Important Info Banner */}
-      <section
-        className="bg-secondary-container/40 p-6 rounded-2xl flex gap-4 items-start mb-12 border border-secondary-container/30 shadow-inner"
-        aria-label="Important Information"
-      >
-        <span className="material-symbols-outlined text-on-secondary-container text-2xl mt-0.5" aria-hidden="true">
-          info
-        </span>
-        <p className="text-sm md:text-base leading-relaxed text-on-secondary-container font-bold">
-          Treatment may be free under Ayushman Bharat if you are eligible. Check eligibility at the hospital helpdesk with your PMJAY card.
-        </p>
+      {/* Filters Section */}
+      <section className="mb-16">
+        <HospitalFilters />
       </section>
 
-      {/* Hospital List */}
-      <section className="space-y-8" aria-label="Hospital listings">
-        <h2 className="sr-only">Available Hospitals</h2>
-        {hospitalResults.map((hospital, index) => (
-          <HospitalCard key={index} {...hospital} />
-        ))}
+      {/* Results Section */}
+      <section className="space-y-12" aria-label="Hospital listings">
+        {!isStateSelected ? (
+          <div className="text-center py-20 bg-surface-container-lowest rounded-[3rem] border-2 border-dashed border-outline-variant/30 flex flex-col items-center gap-6">
+            <span className="material-symbols-outlined text-7xl text-primary/20 scale-150">map</span>
+            <div className="space-y-2">
+              <h3 className="text-2xl font-headline font-black text-on-surface">Ready to start?</h3>
+              <p className="text-on-surface-variant font-medium">Please select a State above to find available hospitals.</p>
+            </div>
+          </div>
+        ) : error ? (
+          <div className="p-8 bg-error-container text-on-error-container rounded-3xl flex items-center justify-center gap-4 border border-error/20">
+            <span className="material-symbols-outlined">error</span>
+            <p className="font-bold">{error}</p>
+          </div>
+        ) : !isLoading && !hasResults ? (
+          <div className="text-center py-20 bg-surface-container-lowest rounded-[3rem] border border-outline-variant/10 flex flex-col items-center gap-6">
+            <span className="material-symbols-outlined text-7xl text-on-surface-variant/20">search_off</span>
+            <div className="space-y-2">
+              <h3 className="text-2xl font-headline font-black text-on-surface">No hospitals found</h3>
+              <p className="text-on-surface-variant font-medium text-sm">Try adjusting your filters or selecting a different district.</p>
+            </div>
+          </div>
+        ) : (
+          <>
+            <div className="flex items-center justify-between px-4 pb-4 border-b border-outline-variant/10">
+              <h2 className="text-sm font-black text-on-surface-variant/50 uppercase tracking-[0.2em]">
+                Found {pagination.totalElements} Hospitals
+              </h2>
+            </div>
+            
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {hospitalResults.map((hospital) => (
+                <HospitalCard key={hospital.id} {...hospital} />
+              ))}
+            </div>
+
+            {/* Pagination / Load More */}
+            {hasMore && (
+              <div className="mt-16 flex justify-center">
+                <button
+                  type="button"
+                  onClick={handleLoadMore}
+                  disabled={isLoading}
+                  className="group relative px-12 py-5 bg-surface-container text-on-surface font-black rounded-2xl border-2 border-outline-variant/20 hover:border-primary/30 transition-all active:scale-[0.98] overflow-hidden hover:cursor-pointer"
+                >
+                  <span className={`flex items-center gap-3 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
+                    Load More Hospitals
+                    <span className="material-symbols-outlined group-hover:translate-y-1 transition-transform">expand_more</span>
+                  </span>
+                  {isLoading && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <span className="material-symbols-outlined animate-spin">progress_activity</span>
+                    </div>
+                  )}
+                </button>
+              </div>
+            )}
+            
+            {!hasMore && hasResults && (
+              <p className="text-center text-on-surface-variant/40 text-sm font-bold pt-8">
+                ✨ You&apos;ve reached the end of the list
+              </p>
+            )}
+          </>
+        )}
       </section>
 
-      {/* Pagination / Load More */}
-      <div className="mt-12 text-center">
-        <button
-          type="button"
-          className="px-12 py-4 bg-surface-container-low text-on-surface font-bold rounded-xl border border-outline-variant/20 hover:bg-surface-container hover:shadow-sm transition-all active:scale-95"
-        >
-          Load More Hospitals
-        </button>
+      {/* Info Banner */}
+      <div className="mt-24 p-8 bg-secondary-container/30 rounded-[2.5rem] border border-secondary-container/20 flex flex-col md:flex-row items-center gap-6 shadow-inner">
+        <div className="w-16 h-16 bg-secondary-container flex items-center justify-center rounded-2xl shrink-0">
+          <span className="material-symbols-outlined text-on-secondary-container text-3xl">info</span>
+        </div>
+        <div className="space-y-1 text-center md:text-left">
+          <h4 className="text-on-secondary-container font-black">Important Treatment Information</h4>
+          <p className="text-on-secondary-container/80 text-sm font-medium leading-relaxed">
+            Treatment under Ayushman Bharat is completely cashless for eligible beneficiaries. Always verify your eligibility at the hospital&apos;s PMJAY helpdesk using your Ayushman Card before commencing treatment.
+          </p>
+        </div>
       </div>
     </main>
   );

@@ -23,6 +23,7 @@ import java.util.concurrent.TimeUnit;
 @RestController
 @RequestMapping("/api/v1/hospitals")
 @Validated
+@CrossOrigin(origins = "*") // Fixes "Failed to fetch" on frontend
 public class HospitalController {
 
     private final HospitalService service;
@@ -55,23 +56,32 @@ public class HospitalController {
     }
 
     @GetMapping("/schemes")
-    public ResponseEntity<List<DropdownResponse>> getSchemes() {
+    public ResponseEntity<List<DropdownResponse>> getSchemes(
+            @RequestParam String state,
+            @RequestParam(required = false) String district
+    ) {
         return ResponseEntity.ok()
                 .cacheControl(CacheControl.maxAge(24, TimeUnit.HOURS))
-                .body(service.getSchemes());
+                .body(service.getSchemes(state, district));
     }
 
     @GetMapping("/specialities")
-    public ResponseEntity<List<DropdownResponse>> getSpecialities() {
+    public ResponseEntity<List<DropdownResponse>> getSpecialities(
+            @RequestParam String state,
+            @RequestParam(required = false) String district
+    ) {
         return ResponseEntity.ok()
                 .cacheControl(CacheControl.maxAge(24, TimeUnit.HOURS))
-                .body(service.getSpecialities());
+                .body(service.getSpecialities(state, district));
     }
 
     @GetMapping("/types")
-    public ResponseEntity<List<String>> getHospitalTypes() {
+    public ResponseEntity<List<String>> getHospitalTypes(
+            @RequestParam String state,
+            @RequestParam(required = false) String district
+    ) {
         return ResponseEntity.ok()
                 .cacheControl(CacheControl.maxAge(24, TimeUnit.HOURS))
-                .body(service.getHospitalTypes());
+                .body(service.getHospitalTypes(state, district));
     }
 }

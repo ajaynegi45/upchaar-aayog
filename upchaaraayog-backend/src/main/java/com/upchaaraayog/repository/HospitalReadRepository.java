@@ -42,39 +42,41 @@ public class HospitalReadRepository {
     }
 
     private String buildDataSql(HospitalFilterRequest f, Pageable pageable) {
-        return """
-                SELECT
-                    h.id, h.hospital_code, h.name, h.state, h.district,
-                    h.contact_number, h.hospital_type,
-                    STRING_AGG(DISTINCT sp.name, chr(31) ORDER BY sp.name) AS speciality_names,
-                    STRING_AGG(DISTINCT sc.name, chr(31) ORDER BY sc.name) AS scheme_names,
-                    COALESCE(BOOL_OR(he.is_convergence_enabled), false)    AS has_convergence
-                FROM hospitals h
-                LEFT JOIN hospital_specialities hs ON hs.hospital_id = h.id
-                LEFT JOIN specialities          sp ON sp.id = hs.speciality_id
-                LEFT JOIN hospital_empanelments he ON he.hospital_id = h.id
-                LEFT JOIN schemes               sc ON sc.id = he.scheme_id
-                """
-                + buildWhereClause(f)
-                + """
-                GROUP BY h.id, h.hospital_code, h.name, h.state, h.district, h.contact_number, h.hospital_type
-                ORDER BY h.name ASC
-                LIMIT """ + pageable.getPageSize() + " OFFSET " + pageable.getOffset();
-    }
+    return """
+            SELECT
+                h.id, h.hospital_code, h.name, h.state, h.district,
+                h.contact_number, h.hospital_type,
+                STRING_AGG(DISTINCT sp.name, chr(31) ORDER BY sp.name) AS speciality_names,
+                STRING_AGG(DISTINCT sc.name, chr(31) ORDER BY sc.name) AS scheme_names,
+                COALESCE(BOOL_OR(he.is_convergence_enabled), false)    AS has_convergence
+            FROM hospitals h
+            LEFT JOIN hospital_specialities hs ON hs.hospital_id = h.id
+            LEFT JOIN specialities sp ON sp.id = hs.speciality_id
+            LEFT JOIN hospital_empanelments he ON he.hospital_id = h.id
+            LEFT JOIN schemes sc ON sc.id = he.scheme_id
+            """
+            + buildWhereClause(f)
+            + """
+            GROUP BY h.id, h.hospital_code, h.name, h.state, h.district, h.contact_number, h.hospital_type
+            ORDER BY h.name ASC
+            """
+            + " LIMIT " + pageable.getPageSize() +
+              " OFFSET " + pageable.getOffset();
+}
 
     private String buildCountSql(HospitalFilterRequest f) {
         return "SELECT COUNT(*) FROM hospitals h" + buildWhereClause(f);
     }
 
     private static String buildWhereClause(HospitalFilterRequest f) {
-        StringBuilder sql = new StringBuilder(" WHERE h.state = :state");
-        if (f.district() != null && !f.district().isBlank()) sql.append(" AND h.district = :district");
-        if (f.hospitalType() != null) sql.append(" AND h.hospital_type = :hospitalType");
+        StringBuilder sql = new StringBuilder(" WHERE h.state = :state ");
+        if (f.district() != null && !f.district().isBlank()) sql.append(" AND h.district = :district ");
+        if (f.hospitalType() != null) sql.append(" AND h.hospital_type = :hospitalType ");
         if (f.hasSpecialityFilter()) {
-            sql.append(" AND EXISTS (SELECT 1 FROM hospital_specialities hsx WHERE hsx.hospital_id = h.id AND hsx.speciality_id = ANY(:specialityIds))");
+            sql.append(" AND EXISTS (SELECT 1 FROM hospital_specialities hsx WHERE hsx.hospital_id = h.id AND hsx.speciality_id = ANY(:specialityIds)) ");
         }
         if (f.hasSchemeFilter()) {
-            sql.append(" AND EXISTS (SELECT 1 FROM hospital_empanelments hex JOIN schemes sc2 ON sc2.id = hex.scheme_id WHERE hex.hospital_id = h.id AND sc2.code = ANY(:schemeCodes))");
+            sql.append(" AND EXISTS (SELECT 1 FROM hospital_empanelments hex JOIN schemes sc2 ON sc2.id = hex.scheme_id WHERE hex.hospital_id = h.id AND sc2.code = ANY(:schemeCodes)) ");
         }
         return sql.toString();
     }
@@ -85,8 +87,14 @@ public class HospitalReadRepository {
         names.add("state"); vals.add(f.state());
         if (f.district() != null && !f.district().isBlank()) { names.add("district"); vals.add(f.district()); }
         if (f.hospitalType() != null) { names.add("hospitalType"); vals.add(f.hospitalType().name()); }
-        if (f.hasSpecialityFilter()) { names.add("specialityIds"); vals.add(f.specialityIds().stream().mapToInt(Integer::intValue).toArray()); }
-        if (f.hasSchemeFilter()) { names.add("schemeCodes"); vals.add(f.schemeCodes().toArray(new String[0])); }
+        if (f.hasSpecialityFilter() && f.specialityIds() != null) { 
+            names.add("specialityIds"); 
+            vals.add(f.specialityIds().stream().mapToInt(Integer::intValue).toArray()); 
+        }
+        if (f.hasSchemeFilter() && f.schemeCodes() != null) { 
+            names.add("schemeCodes"); 
+            vals.add(f.schemeCodes().toArray(new String[0])); 
+        }
         JdbcClient.StatementSpec spec = jdbcClient.sql(sql);
         for (int i = 0; i < names.size(); i++) spec = spec.param(names.get(i), vals.get(i));
         return spec;
@@ -100,15 +108,45 @@ public class HospitalReadRepository {
         return jdbcClient.sql("SELECT DISTINCT district FROM hospitals WHERE state = :state ORDER BY district ASC").param("state", state).query(String.class).list();
     }
 
-    public List<DropdownResponse> findAllSchemes() {
-        return jdbcClient.sql("SELECT code, name FROM schemes ORDER BY name ASC").query((rs, rn) -> new DropdownResponse(rs.getString("code"), rs.getString("name"))).list();
+    public List<DropdownResponse> findSchemes(String state, String district) {
+        String base = "SELECT DISTINCT sc.code, sc.name FROM schemes sc " +
+                      "JOIN hospital_empanelments he ON he.scheme_id = sc.id " +
+                      "JOIN hospitals h ON h.id = he.hospital_id " +
+                      "WHERE h.state = :state ";
+        if (district != null && !district.isBlank()) {
+            return jdbcClient.sql(base + "AND h.district = :district ORDER BY sc.name ASC")
+                    .param("state", state).param("district", district)
+                    .query((rs, rn) -> new DropdownResponse(rs.getString("code"), rs.getString("name"))).list();
+        }
+        return jdbcClient.sql(base + "ORDER BY sc.name ASC")
+                .param("state", state)
+                .query((rs, rn) -> new DropdownResponse(rs.getString("code"), rs.getString("name"))).list();
     }
 
-    public List<DropdownResponse> findAllSpecialities() {
-        return jdbcClient.sql("SELECT code, name FROM specialities ORDER BY name ASC").query((rs, rn) -> new DropdownResponse(rs.getString("code"), rs.getString("name"))).list();
+    public List<DropdownResponse> findSpecialities(String state, String district) {
+        String base = "SELECT DISTINCT sp.code, sp.name FROM specialities sp " +
+                      "JOIN hospital_specialities hs ON hs.speciality_id = sp.id " +
+                      "JOIN hospitals h ON h.id = hs.hospital_id " +
+                      "WHERE h.state = :state ";
+        if (district != null && !district.isBlank()) {
+            return jdbcClient.sql(base + "AND h.district = :district ORDER BY sp.name ASC")
+                    .param("state", state).param("district", district)
+                    .query((rs, rn) -> new DropdownResponse(rs.getString("code"), rs.getString("name"))).list();
+        }
+        return jdbcClient.sql(base + "ORDER BY sp.name ASC")
+                .param("state", state)
+                .query((rs, rn) -> new DropdownResponse(rs.getString("code"), rs.getString("name"))).list();
     }
 
-    public List<String> findDistinctHospitalTypes() {
-        return jdbcClient.sql("SELECT DISTINCT hospital_type FROM hospitals WHERE hospital_type IS NOT NULL ORDER BY hospital_type ASC").query(String.class).list();
+    public List<String> findHospitalTypes(String state, String district) {
+        String base = "SELECT DISTINCT hospital_type FROM hospitals WHERE state = :state AND hospital_type IS NOT NULL ";
+        if (district != null && !district.isBlank()) {
+            return jdbcClient.sql(base + "AND district = :district ORDER BY hospital_type ASC")
+                    .param("state", state).param("district", district)
+                    .query(String.class).list();
+        }
+        return jdbcClient.sql(base + "ORDER BY hospital_type ASC")
+                .param("state", state)
+                .query(String.class).list();
     }
 }

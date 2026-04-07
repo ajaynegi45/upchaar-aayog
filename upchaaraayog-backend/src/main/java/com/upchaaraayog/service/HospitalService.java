@@ -20,11 +20,6 @@ public class HospitalService {
         this.readRepository = readRepository;
     }
 
-    /**
-     * readOnly = true: HikariCP skips setAutoCommit(false) overhead and allows
-     * routing to a read replica if one is configured.
-     * JdbcClient participates in Spring's transaction context automatically.
-     */
     @Transactional(readOnly = true)
     public Page<HospitalDTO> listHospitals(HospitalFilterRequest filter, Pageable pageable) {
         return readRepository.findHospitals(filter, pageable);
@@ -41,17 +36,17 @@ public class HospitalService {
     }
 
     @Transactional(readOnly = true)
-    public List<DropdownResponse> getSchemes() {
-        return readRepository.findAllSchemes();
+    public List<DropdownResponse> getSchemes(String state, String district) {
+        return readRepository.findSchemes(state, district);
     }
 
     @Transactional(readOnly = true)
-    public List<DropdownResponse> getSpecialities() {
-        return readRepository.findAllSpecialities();
+    public List<DropdownResponse> getSpecialities(String state, String district) {
+        return readRepository.findSpecialities(state, district);
     }
 
     @Transactional(readOnly = true)
-    public List<String> getHospitalTypes() {
-        return readRepository.findDistinctHospitalTypes();
+    public List<String> getHospitalTypes(String state, String district) {
+        return readRepository.findHospitalTypes(state, district);
     }
 }

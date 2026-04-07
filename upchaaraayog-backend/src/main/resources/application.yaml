@@ -2,9 +2,9 @@ spring:
   application:
     name: upchaaraayog
   
-  devtools:
-    restart:
-      exclude: "data/**,**/*.csv,src/main/resources/**/*.csv"
+#  devtools:
+#    restart:
+#      exclude: "data/**,**/*.csv,src/main/resources/**/*.csv"
 
   datasource:
     url: ${DATABASE_URL:jdbc:postgresql://ep-billowing-violet-a19l32b7-pooler.ap-southeast-1.aws.neon.tech/upchaaraayog_db?sslmode=require&channel_binding=require}
@@ -44,4 +44,5 @@ management:
 
 server:
   port: 8080
+  address: 0.0.0.0
   shutdown: graceful

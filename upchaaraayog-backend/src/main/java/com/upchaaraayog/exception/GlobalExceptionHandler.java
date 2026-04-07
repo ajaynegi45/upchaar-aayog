@@ -1,6 +1,7 @@
 package com.upchaaraayog.exception;
 
 import com.upchaaraayog.dto.ErrorResponse;
+import jakarta.validation.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -48,6 +49,17 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleMethodValidation(HandlerMethodValidationException ex, WebRequest request) {
         // Fallback to getMessage() if more specific parsing is not possible in this version
         String detail = sanitise(ex.getReason());
+        if (detail == null || detail.isBlank()) {
+            detail = "Validation failed for request parameters";
+        }
+
+        return ResponseEntity.badRequest()
+                .body(new ErrorResponse(HttpStatus.BAD_REQUEST.value(), detail, request.getDescription(false)));
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<ErrorResponse> handleConstraintViolation(ConstraintViolationException ex, WebRequest request) {
+        String detail = sanitise(ex.getMessage());
         if (detail == null || detail.isBlank()) {
             detail = "Validation failed for request parameters";
         }

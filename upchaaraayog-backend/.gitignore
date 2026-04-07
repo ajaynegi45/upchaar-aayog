@@ -30,7 +30,7 @@ build/
 .vscode/
 
 
-data
+src/main/resources/dbdatapush/data
 classpath.txt
 
 HospitalCsvRunner.java
