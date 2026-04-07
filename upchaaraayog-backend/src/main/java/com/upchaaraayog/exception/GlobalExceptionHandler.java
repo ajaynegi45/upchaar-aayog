@@ -1,4 +1,4 @@
-package com.upchaaraayog.exceptions;
+package com.upchaaraayog.exception;
 
 import com.upchaaraayog.dto.ErrorResponse;
 import org.springframework.http.HttpStatus;

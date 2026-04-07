@@ -1,8 +1,8 @@
-package com.upchaaraayog.services;
+package com.upchaaraayog.service;
 
 import com.upchaaraayog.dto.JanAushadhiKendraDTO;
 import com.upchaaraayog.entities.JanAushadhiKendra;
-import com.upchaaraayog.repositories.JanAushadhiRepository;
+import com.upchaaraayog.repository.JanAushadhiRepository;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

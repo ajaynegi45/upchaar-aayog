@@ -1,4 +1,4 @@
-package com.upchaaraayog.repositories;
+package com.upchaaraayog.repository;
 
 import com.upchaaraayog.dto.HospitalDTO;
 import org.jspecify.annotations.NonNull;

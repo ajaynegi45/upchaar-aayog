@@ -2,7 +2,7 @@ package com.upchaaraayog.controller;
 
 import com.upchaaraayog.dto.HospitalDTO;
 import com.upchaaraayog.dto.HospitalFilterRequest;
-import com.upchaaraayog.services.HospitalService;
+import com.upchaaraayog.service.HospitalService;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;

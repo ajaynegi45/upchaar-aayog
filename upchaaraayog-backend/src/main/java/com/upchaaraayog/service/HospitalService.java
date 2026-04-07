@@ -1,8 +1,8 @@
-package com.upchaaraayog.services;
+package com.upchaaraayog.service;
 
 import com.upchaaraayog.dto.HospitalDTO;
 import com.upchaaraayog.dto.HospitalFilterRequest;
-import com.upchaaraayog.repositories.HospitalReadRepository;
+import com.upchaaraayog.repository.HospitalReadRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.upchaaraayog.repositories;
+package com.upchaaraayog.repository;
 
 import com.upchaaraayog.entities.JanAushadhiKendra;
 import org.springframework.data.jpa.repository.JpaRepository;
