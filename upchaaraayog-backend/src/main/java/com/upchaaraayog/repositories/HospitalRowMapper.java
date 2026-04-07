@@ -1,8 +1,8 @@
 package com.upchaaraayog.repositories;
 
 import com.upchaaraayog.dto.HospitalDTO;
+import org.jspecify.annotations.NonNull;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.lang.NonNull;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,50 +10,66 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Maps one JDBC ResultSet row → one HospitalCardDTO.
+ * Maps one JDBC ResultSet row to one HospitalDTO record.
  *
- * WHY A DEDICATED ROWMAPPER (not JdbcClient's built-in record mapping):
- *   JdbcClient's auto record mapping works by passing constructor arguments
- *   positionally from the ResultSet. That works fine for scalar types (Long,
- *   String, boolean). But List<String> is not a JDBC type — the driver returns
- *   STRING_AGG output as a plain String and JdbcClient has no built-in way to
- *   split it into a List.
+ * WHY A DEDICATED ROWMAPPER (not JdbcClient's automatic record mapping):
+ *   JdbcClient can auto-map a ResultSet to a record by matching column names
+ *   to constructor parameters (case-insensitive). This works for scalar types
+ *   (Long, String, boolean). However, HospitalDTO has two List<String> fields
+ *   (specialities, schemes). JDBC has no List type — the driver returns
+ *   STRING_AGG output as a plain VARCHAR string.
+ *   JdbcClient has no built-in converter from VARCHAR → List<String>, so we
+ *   need a RowMapper to split the aggregated string ourselves.
  *
- *   A RowMapper gives us full control: we read each column by name (safer than
- *   positional indexing — column order changes don't silently corrupt data),
- *   split the aggregated strings with the agreed delimiter, and construct the
- *   record explicitly.
+ * WHY COLUMN-NAME ACCESS (not positional rs.getString(1)):
+ *   Positional indexing breaks silently if the SQL SELECT column order changes.
+ *   Column-name access (rs.getString("hospital_code")) is robust to reordering.
  *
- * DELIMITER CONTRACT [Fix for Issue 4]:
- *   STRING_AGG in the SQL uses '\u001F' (ASCII Unit Separator, decimal 31).
- *   This character is a non-printable control character defined in ASCII/Unicode
- *   as a field separator. It cannot appear in hospital names, speciality names,
- *   or scheme names in any realistic dataset. Using it eliminates the edge case
- *   where a name containing a comma or pipe would silently corrupt the list.
+ * DELIMITER CONTRACT [originally Fixed Issue 4]:
+ *   SQL uses chr(31) — PostgreSQL's Unit Separator character (ASCII decimal 31).
+ *   This non-printable control character cannot appear in any real hospital name,
+ *   speciality name, or scheme name. It eliminates the edge case where a name
+ *   containing a comma or pipe would silently corrupt the split.
+ *   See HospitalReadRepository.buildDataSql() for where chr(31) is used in SQL.
+ *   DELIMITER here must match: chr(31) = '\u001F'.
  *
- * COLUMN NAME CONTRACT (must match aliases in HospitalReadRepository SQL):
- *   h.id                 → "id"
- *   h.hospital_code      → "hospital_code"
- *   h.name               → "name"
- *   h.state              → "state"
- *   h.district           → "district"
- *   h.contact_number     → "contact_number"
- *   h.hospital_type      → "hospital_type"
- *   STRING_AGG(sp.name)  → "speciality_names"
- *   STRING_AGG(sc.name)  → "scheme_names"
- *   BOOL_OR(...)         → "has_convergence"
+ * @NonNull [FIX Bug 8]:
+ *   org.springframework.lang.NonNull is deprecated since Spring Framework 7.0.
+ *   Replaced by org.jspecify.annotations.NonNull per JSpecify standard adopted
+ *   by Spring Boot 4 / Spring Framework 7.
+ *   Ref: https://docs.spring.io/spring-framework/reference/core/null-safety.html
+ *
+ * COLUMN NAME CONTRACT (must match aliases in HospitalReadRepository.buildDataSql):
+ *   id                → h.id
+ *   hospital_code     → h.hospital_code
+ *   name              → h.name
+ *   state             → h.state
+ *   district          → h.district
+ *   contact_number    → h.contact_number
+ *   hospital_type     → h.hospital_type
+ *   speciality_names  → STRING_AGG(DISTINCT sp.name, chr(31) ORDER BY sp.name)
+ *   scheme_names      → STRING_AGG(DISTINCT sc.name, chr(31) ORDER BY sc.name)
+ *   has_convergence   → COALESCE(BOOL_OR(he.is_convergence_enabled), false)
  */
 public class HospitalRowMapper implements RowMapper<HospitalDTO> {
 
     /**
-     * ASCII Unit Separator — used as the STRING_AGG delimiter in SQL.
-     * Single char for fast split. Defined once here and referenced from the SQL constant.
+     * The delimiter character used by STRING_AGG in SQL: chr(31) = ASCII Unit Separator.
+     * Defined here as the single source of truth. The SQL uses chr(31); Java splits on this char.
+     * These must always match — if you change one, change the other.
      */
     public static final char DELIMITER = '\u001F';
 
+    /**
+     * Maps one row from the ResultSet to one HospitalDTO.
+     *
+     * @param rs     the current ResultSet row (never null — Spring guarantees this)
+     * @param rowNum zero-based row number (not used here; required by RowMapper contract)
+     * @return a fully constructed, immutable HospitalDTO
+     * @throws SQLException if any column read fails (propagated up to JdbcClient)
+     */
     @Override
-    @NonNull // 'org.springframework.lang.NonNull' is deprecated since version 7.0
-    public HospitalDTO mapRow(@NonNull ResultSet rs, int rowNum) throws SQLException {
+    public @NonNull HospitalDTO mapRow(@NonNull ResultSet rs, int rowNum) throws SQLException {
         return new HospitalDTO(
                 rs.getLong("id"),
                 rs.getString("hospital_code"),
@@ -69,23 +85,32 @@ public class HospitalRowMapper implements RowMapper<HospitalDTO> {
     }
 
     /**
-     * Splits a STRING_AGG result into a List.
+     * Splits a STRING_AGG result into an unmodifiable List<String>.
      *
-     * Handles:
-     *   null  → empty list  (hospital has no specialities / no schemes)
-     *   blank → empty list  (shouldn't happen with STRING_AGG, but defensive)
-     *   normal value → split on DELIMITER, trim each token
+     * Null-safety:
+     *   STRING_AGG returns SQL NULL (not empty string) when there are no rows to aggregate.
+     *   Example: a hospital with zero specialities → speciality_names IS NULL.
+     *   rs.getString() returns Java null for SQL NULL → we return List.of() (empty list).
      *
-     * Arrays.asList() returns a fixed-size list backed by the array — no copy,
-     * minimal allocation. The list is never mutated after construction.
+     * Blank-safety:
+     *   STRING_AGG should never produce a blank string for a non-null aggregate,
+     *   but we guard for it defensively (e.g., if a name was stored as whitespace).
+     *
+     * Trim:
+     *   STRING_AGG doesn't add leading/trailing whitespace, but we trim each token
+     *   defensively in case data was stored with padding.
+     *
+     * @param aggregated the raw STRING_AGG output, or null if no rows
+     * @return an unmodifiable list of trimmed, non-empty name strings
      */
-
-    private List<String> splitAggregate(String aggregated) {
-        if (aggregated == null || aggregated.isEmpty()) return List.of();
+    private static List<String> splitAggregate(String aggregated) {
+        if (aggregated == null || aggregated.isEmpty()) {
+            return List.of(); // immutable empty list
+        }
+        // Arrays.stream().map().toList() returns an unmodifiable list (Java 16+)
         return Arrays.stream(aggregated.split(String.valueOf(DELIMITER)))
-
-                // Trim each token defensively (STRING_AGG shouldn't add whitespace, but guard it)
                 .map(String::trim)
+                .filter(s -> !s.isEmpty()) // guard: discard any empty tokens
                 .toList();
     }
 }

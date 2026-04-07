@@ -3,32 +3,39 @@ package com.upchaaraayog.entities;
 import jakarta.persistence.*;
 
 /**
- * Explicit join entity between Hospital and Speciality.
- * No payload columns currently, but kept as explicit entity (vs @ManyToMany) for
- * future-proofing (e.g., adding accreditation date, primary/secondary flag, etc.)
-
- * BUGS FIXED:
- * [1]  No getters/setters — added Lombok
- * [2]  Missing unique constraint on (hospital_id, speciality_id) — critical data integrity gap
- * [3]  Missing @Index on FK columns — speciality_id filter in EXISTS subquery would full-scan
- * [4]  No equals()/hashCode()
- * [5]  Missing nullable = false on @ManyToOne relationships
+ * Join entity between Hospital and Speciality.
+ *
+ * WHY AN EXPLICIT JOIN ENTITY:
+ *   Currently carries no extra columns, but using an explicit entity (vs @ManyToMany)
+ *   allows adding columns in the future (e.g., isPrimary, accreditedDate, status)
+ *   without restructuring the entire association.
+ *
+ * INDEX STRATEGY — same rationale as HospitalEmpanelment:
+ *
+ *   FIX [Bug 7 — Redundant Index]:
+ *   The UNIQUE constraint on (hospital_id, speciality_id) automatically creates
+ *   a composite index. hospital_id is the leading column, so it is already indexed.
+ *   The previous @Index(name = "idx_hspec_hospital_id", columnList = "hospital_id")
+ *   was a duplicate — wasted ~3–6 MB at 45k hospitals × avg 4 specialities.
+ *
+ *   Only idx_hspec_speciality_id is kept for reverse-side FK and admin queries.
  */
 @Entity
 @Table(
         name = "hospital_specialities",
         uniqueConstraints = {
+                // Ensures a hospital is associated with each speciality at most once.
+                // Also creates the composite index (hospital_id, speciality_id).
                 @UniqueConstraint(
                         name = "uk_hospital_speciality",
                         columnNames = {"hospital_id", "speciality_id"}
                 )
         },
         indexes = {
-                @Index(name = "idx_hspec_hospital_id",   columnList = "hospital_id"),
+                // FIX: idx_hspec_hospital_id REMOVED — redundant with uk_hospital_speciality's leading column.
                 @Index(name = "idx_hspec_speciality_id", columnList = "speciality_id")
         }
 )
-
 public class HospitalSpeciality {
 
     @Id
@@ -43,36 +50,26 @@ public class HospitalSpeciality {
     @JoinColumn(name = "speciality_id", nullable = false)
     private Speciality speciality;
 
+    // ── Constructors ──────────────────────────────────────────────────────────
+
     public HospitalSpeciality() {}
-    public HospitalSpeciality(Long id, Hospital hospital, Speciality speciality) {
-        this.id = id;
+
+    public HospitalSpeciality(Hospital hospital, Speciality speciality) {
         this.hospital = hospital;
         this.speciality = speciality;
     }
 
-    public Long getId() {
-        return id;
-    }
+    // ── Getters / Setters ─────────────────────────────────────────────────────
 
-    public Hospital getHospital() {
-        return hospital;
-    }
+    public Long getId()               { return id; }
+    public Hospital getHospital()     { return hospital; }
+    public Speciality getSpeciality() { return speciality; }
 
-    public Speciality getSpeciality() {
-        return speciality;
-    }
+    public void setId(Long id)                      { this.id = id; }
+    public void setHospital(Hospital hospital)      { this.hospital = hospital; }
+    public void setSpeciality(Speciality speciality) { this.speciality = speciality; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setHospital(Hospital hospital) {
-        this.hospital = hospital;
-    }
-
-    public void setSpeciality(Speciality speciality) {
-        this.speciality = speciality;
-    }
+    // ── equals / hashCode ─────────────────────────────────────────────────────
 
     @Override
     public boolean equals(Object o) {
