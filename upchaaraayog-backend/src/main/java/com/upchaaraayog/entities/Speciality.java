@@ -1,8 +1,8 @@
 package com.upchaaraayog.entities;
 
 import jakarta.persistence.*;
-//import org.hibernate.annotations.Cache;
-//import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.NaturalId;
 
 /**
@@ -15,7 +15,7 @@ import org.hibernate.annotations.NaturalId;
                 @UniqueConstraint(name = "uk_speciality_code", columnNames = "code")
         }
 )
-//@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 public class Speciality {
 
     @Id

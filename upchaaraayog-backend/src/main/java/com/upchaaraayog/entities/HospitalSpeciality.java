@@ -4,20 +4,20 @@ import jakarta.persistence.*;
 
 /**
  * Join entity between Hospital and Speciality.
- *
+
  * WHY AN EXPLICIT JOIN ENTITY:
  *   Currently carries no extra columns, but using an explicit entity (vs @ManyToMany)
  *   allows adding columns in the future (e.g., isPrimary, accreditedDate, status)
  *   without restructuring the entire association.
- *
+
  * INDEX STRATEGY — same rationale as HospitalEmpanelment:
- *
+
  *   FIX [Bug 7 — Redundant Index]:
  *   The UNIQUE constraint on (hospital_id, speciality_id) automatically creates
  *   a composite index. hospital_id is the leading column, so it is already indexed.
  *   The previous @Index(name = "idx_hspec_hospital_id", columnList = "hospital_id")
  *   was a duplicate — wasted ~3–6 MB at 45k hospitals × avg 4 specialities.
- *
+
  *   Only idx_hspec_speciality_id is kept for reverse-side FK and admin queries.
  */
 @Entity
@@ -53,7 +53,6 @@ public class HospitalSpeciality {
     // ── Constructors ──────────────────────────────────────────────────────────
 
     public HospitalSpeciality() {}
-
     public HospitalSpeciality(Hospital hospital, Speciality speciality) {
         this.hospital = hospital;
         this.speciality = speciality;

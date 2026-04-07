@@ -84,7 +84,7 @@ public class Hospital {
      * See schema.sql.
      */
     @Enumerated(EnumType.STRING)
-    @Column(name = "hospital_type", nullable = false, length = 20) // FIX: was 10, must be >= 16
+    @Column(name = "hospital_type", nullable = true, length = 20)
     private HospitalType hospitalType;
 
     /**
