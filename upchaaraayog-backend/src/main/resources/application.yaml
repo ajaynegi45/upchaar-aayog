@@ -2,22 +2,18 @@ spring:
   application:
     name: upchaaraayog
   
-  # Virtual Threads Mandate (Java 25 + Spring Boot 4)
-#  threads:
-#    virtual:
-#      enabled: true
+  devtools:
+    restart:
+      exclude: "data/**,**/*.csv,src/main/resources/**/*.csv"
 
   datasource:
     url: ${DATABASE_URL:jdbc:postgresql://ep-billowing-violet-a19l32b7-pooler.ap-southeast-1.aws.neon.tech/upchaaraayog_db?sslmode=require&channel_binding=require}
     username: ${DATABASE_USERNAME:neondb_owner}
     password: ${DATABASE_PASSWORD:npg_BhfdzvEWt58e}
     driver-class-name: org.postgresql.Driver
-#    hikari:
-#      maximum-pool-size: 10
-#      idle-timeout: 30000
-#      keepalive-time: 60000
 
   jpa:
+    open-in-view: false
     hibernate:
       ddl-auto: update
     show-sql: false
@@ -25,36 +21,18 @@ spring:
       hibernate:
         format_sql: false
         dialect: org.hibernate.dialect.PostgreSQLDialect
-
-        # ─── Second-Level Cache ───
-#        cache:
-#          use_second_level_cache: true
-#          use_query_cache: false     # query cache causes more issues than it solves
-##          region:
-##            factory_class: jcache
         jakarta:
           cache:
             provider: org.ehcache.jsr107.EhcacheCachingProvider
-
-
-        # ── Hibernate Statistics (enable during load testing only) ────────────
-        # Exposes via Actuator: /actuator/metrics/hibernate.sessions.open
         generate_statistics: false
-
-        # Open Session in View — DISABLE. This anti-pattern causes lazy loading in the
-        # view/controller layer, hiding N+1 bugs during development.
-        open-in-view: false
-
 
 logging:
   level:
     root: INFO
     com.upchaar_aayog: DEBUG
     org.springframework.web: INFO
-    org.hibernate.SQL: DEBUG
+    org.hibernate.SQL: WARN
 
-
-# ── Actuator ───
 management:
   endpoints:
     web:
@@ -64,9 +42,6 @@ management:
     health:
       show-details: always
 
-
-
-# ── Server ───
 server:
   port: 8080
-  shutdown: graceful # Operational excellence mandate
+  shutdown: graceful

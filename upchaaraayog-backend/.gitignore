@@ -29,3 +29,11 @@ build/
 ### VS Code ###
 .vscode/
 
+
+data
+classpath.txt
+
+HospitalCsvRunner.java
+HospitalCsvService.java
+
+dbdatapush
