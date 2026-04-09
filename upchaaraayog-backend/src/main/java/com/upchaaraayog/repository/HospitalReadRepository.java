@@ -47,7 +47,7 @@ public class HospitalReadRepository {
                 h.id, h.hospital_code, h.name, h.state, h.district,
                 h.contact_number, h.hospital_type,
                 STRING_AGG(DISTINCT sp.name, chr(31) ORDER BY sp.name) AS speciality_names,
-                STRING_AGG(DISTINCT sc.name, chr(31) ORDER BY sc.name) AS scheme_names,
+                STRING_AGG(DISTINCT sc.code, chr(31) ORDER BY sc.code) AS scheme_names,
                 COALESCE(BOOL_OR(he.is_convergence_enabled), false)    AS has_convergence
             FROM hospitals h
             LEFT JOIN hospital_specialities hs ON hs.hospital_id = h.id

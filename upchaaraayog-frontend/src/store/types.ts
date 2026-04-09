@@ -25,7 +25,8 @@ export interface Hospital {
     contactNumber: string | null;
     hospitalType: string | null;
     specialityNames: string[];
-    schemeNames: string[];
+    schemeNames?: string[];
+    schemeCodes?: string[];
     hasConvergence: boolean;
 }
 
@@ -34,11 +35,6 @@ export type HospitalTypeOption =
     | "PUBLIC"
     | "PRIVATE"
     | "NON_PROFIT_PRIVATE";
-
-export interface DropdownResponse {
-    code: string;
-    name: string;
-}
 
 export interface Pagination {
     currentPage: number;

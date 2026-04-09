@@ -5,57 +5,75 @@ export default function Home() {
     return (
         <>
             {/* Hero Section */}
-            <section className="relative px-6 pt-16 pb-24 md:pt-32 md:pb-40 overflow-hidden">
-                <div
-                    className="absolute inset-0 bg-gradient-to-br from-primary-container/30 to-secondary-container/20 -z-10"/>
+            <section className="relative px-6 pt-16 mt-[-17] pb-24 md:pt-32 md:pb-40 overflow-hidden">
+                <div className="absolute inset-0 bg-linear-to-br from-primary-container/30 to-secondary-container/20 -z-10"/>
                 <div className="max-w-4xl mx-auto text-center">
                     <h1 className="font-headline text-4xl md:text-6xl font-extrabold text-on-surface leading-[1.1] tracking-tight mb-6">
                         Find Affordable Treatment
                     </h1>
                     <h1 className="font-headline text-4xl md:text-6xl font-extrabold text-on-surface leading-[1.1] tracking-tight mb-6">
-                        Near You — <span className="text-[#016b5f] italic">Instantly</span>
+                        Near You — <span className="text-primary-dark italic">Instantly</span>
                     </h1>
                     <p className="text-lg md:text-xl text-on-surface-variant mb-12 max-w-2xl mx-auto leading-relaxed">
                         Locate nearby Jan Aushadhi Kendra for low-cost medicines and
                         hospitals where treatment may be free.
                     </p>
 
-                    <div className="relative max-w-2xl mx-auto mb-8">
-                        <div
-                            className="hidden md:flex items-center  bg-surface-container-lowest rounded-xl shadow-[0_32px_48px_rgba(45,52,51,0.04)] pl-3 pr-2 py-1">
+                    {/*<div className="relative max-w-2xl mx-auto mb-8">*/}
+                    {/*    <div*/}
+                    {/*        className="hidden md:flex items-center  bg-surface-container-lowest rounded-xl shadow-[0_32px_48px_rgba(45,52,51,0.04)] pl-3 pr-2 py-1">*/}
 
-                            <span className="material-symbols-outlined text-outline mr-2"
-                                  aria-hidden="true">search</span>
+                    {/*        <span className="material-symbols-outlined text-outline mr-2"*/}
+                    {/*              aria-hidden="true">search</span>*/}
 
-                            <input
-                                className="w-full bg-transparent py-4 text-base text-on-surface placeholder:text-outline-variant border-none focus:outline-none focus:ring-0"
-                                placeholder="Search nearby Jan Aushadhi Kendra"
-                                type="text"
-                                aria-label="Search Jan Aushadhi Kendra"
-                            />
+                    {/*        <input*/}
+                    {/*            className="w-full bg-transparent py-4 text-base text-on-surface placeholder:text-outline-variant border-none focus:outline-none focus:ring-0"*/}
+                    {/*            placeholder="Search nearby Jan Aushadhi Kendra"*/}
+                    {/*            type="text"*/}
+                    {/*            aria-label="Search Jan Aushadhi Kendra"*/}
+                    {/*        />*/}
 
-                            <Link href="/jan-aushadhi-kendra"
-                                  className="hidden md:block bg-primary text-on-primary px-6 py-3 rounded-lg font-bold whitespace-nowrap hover:bg-primary-dim transition-all shadow-sm active:scale-95 cursor-pointer">
-                                Find Kendra
-                            </Link>
-                        </div>
+                    {/*        <Link href="/jan-aushadhi-kendra"*/}
+                    {/*              className="hidden md:block bg-primary text-on-primary px-6 py-3 rounded-lg font-bold whitespace-nowrap hover:bg-primary-dim transition-all shadow-sm active:scale-95 cursor-pointer">*/}
+                    {/*            Find Kendra*/}
+                    {/*        </Link>*/}
+                    {/*    </div>*/}
 
-                        <Link href="/jan-aushadhi-kendra"
-                              className="md:hidden mt-1 bg-primary text-on-primary px-10 py-3 md:px-15 md:py-4 md:text-lg  rounded-lg font-bold whitespace-nowrap hover:bg-primary-dim transition-all shadow-sm cursor-pointer">
-                            Find Kendra
-                        </Link>
+                    {/*    <Link href="/jan-aushadhi-kendra"*/}
+                    {/*          className="md:hidden mt-1 bg-primary text-on-primary px-10 py-3 md:px-15 md:py-4 md:text-lg  rounded-lg font-bold whitespace-nowrap hover:bg-primary-dim transition-all shadow-sm cursor-pointer">*/}
+                    {/*        Find Kendra*/}
+                    {/*    </Link>*/}
+                    {/*</div>*/}
+
+
+                    <div className="flex flex-row justify-center items-center gap-3 mb-8" >
+
+                    <Link href="/jan-aushadhi-kendra"
+                          className=" mt-1 bg-primary text-on-primary px-5 py-3 md:text-lg  rounded-lg font-bold whitespace-nowrap hover:bg-primary-dim transition-all shadow-sm cursor-pointer">
+                        Find Kendra
+                    </Link>
+
+                    <Link href="/jan-aushadhi-kendra"
+                          className=" mt-1 bg-primary text-on-primary px-5 py-3 md:text-lg  rounded-lg font-bold whitespace-nowrap hover:bg-primary-dim transition-all shadow-sm cursor-pointer">
+                        Find Hospital
+                    </Link>
                     </div>
-                    <div
-                        className="flex items-start justify-center gap-2 text-on-surface-variant/70 text-sm font-medium ">
-            <span
-                className="material-symbols-outlined text-primary scale-75"
-                style={{fontVariationSettings: '"FILL" 1'}}
-                aria-hidden="true"
-            >
-              verified_user
-            </span>
-                        Based on Jan Aushadhi and Ayushman Bharat data
-                    </div>
+
+
+
+
+
+            {/*        <div*/}
+            {/*            className="flex items-start justify-center gap-2 text-on-surface-variant/70 text-sm font-medium ">*/}
+            {/*<span*/}
+            {/*    className="material-symbols-outlined text-primary scale-75"*/}
+            {/*    style={{fontVariationSettings: '"FILL" 1'}}*/}
+            {/*    aria-hidden="true"*/}
+            {/*>*/}
+            {/*  verified_user*/}
+            {/*</span>*/}
+            {/*            Based on Jan Aushadhi and Ayushman Bharat data*/}
+            {/*        </div>*/}
                 </div>
             </section>
 
@@ -254,13 +272,13 @@ export default function Home() {
             </section>
 
             {/* Floating Action Button */}
-            <button
-                className="fixed bottom-8 right-8 bg-primary text-on-primary w-14 h-14 rounded-full flex items-center justify-center shadow-2xl z-40 hover:scale-110 active:scale-90 transition-transform focus:ring-4 focus:ring-primary/40"
-                aria-label="View on Map"
-                type="button"
-            >
-                <span className="material-symbols-outlined">map</span>
-            </button>
+            {/*<button*/}
+            {/*    className="fixed bottom-8 right-8 bg-primary text-on-primary w-14 h-14 rounded-full flex items-center justify-center shadow-2xl z-40 hover:scale-110 active:scale-90 transition-transform focus:ring-4 focus:ring-primary/40"*/}
+            {/*    aria-label="View on Map"*/}
+            {/*    type="button"*/}
+            {/*>*/}
+            {/*    <span className="material-symbols-outlined">map</span>*/}
+            {/*</button>*/}
         </>
     );
 }
