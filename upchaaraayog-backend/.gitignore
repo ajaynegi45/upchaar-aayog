@@ -37,3 +37,10 @@ HospitalCsvRunner.java
 HospitalCsvService.java
 
 dbdatapush
+
+
+application-dev.yaml
+
+.mvn
+.aws-sam
+samconfig.toml
