@@ -1,48 +1,5 @@
 spring:
   application:
     name: upchaaraayog
-  
-#  devtools:
-#    restart:
-#      exclude: "data/**,**/*.csv,src/main/resources/**/*.csv"
-
-  datasource:
-    url: ${DATABASE_URL:jdbc:postgresql://ep-billowing-violet-a19l32b7-pooler.ap-southeast-1.aws.neon.tech/upchaaraayog_db?sslmode=require&channel_binding=require}
-    username: ${DATABASE_USERNAME:neondb_owner}
-    password: ${DATABASE_PASSWORD:npg_BhfdzvEWt58e}
-    driver-class-name: org.postgresql.Driver
-
-  jpa:
-    open-in-view: false
-    hibernate:
-      ddl-auto: update
-    show-sql: false
-    properties:
-      hibernate:
-        format_sql: false
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-        jakarta:
-          cache:
-            provider: org.ehcache.jsr107.EhcacheCachingProvider
-        generate_statistics: false
-
-logging:
-  level:
-    root: INFO
-    com.upchaar_aayog: DEBUG
-    org.springframework.web: INFO
-    org.hibernate.SQL: WARN
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health, info, metrics, prometheus
-  endpoint:
-    health:
-      show-details: always
-
-server:
-  port: 8080
-  address: 0.0.0.0
-  shutdown: graceful
+  profiles:
+    active: prod
