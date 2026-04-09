@@ -168,12 +168,15 @@ export default function HospitalPage() {
                 ) : (
                     <>
                         <div className="flex items-center justify-between px-2 pb-4 mb-2 border-b border-outline-variant/10">
-                            <h2 className="text-xs md:text-sm font-black text-primary-dark">
+                            <h2 className="text-xs md:text-sm font-black text-primary-dark flex items-center gap-2">
                                 {isLoading && !hasResults ? "Searching..." : `Found ${pagination.totalElements} Hospitals`}
+                                {isLoading && hasResults && (
+                                    <span className="material-symbols-outlined animate-spin text-primary text-[18px] ml-1">progress_activity</span>
+                                )}
                             </h2>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                        <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 transition-opacity duration-300 ${isLoading ? 'opacity-50 pointer-events-none' : 'opacity-100'}`}>
                             {hospitalResults.map((hospital) => (
                                 <HospitalCard key={hospital.id} {...hospital} />
                             ))}
