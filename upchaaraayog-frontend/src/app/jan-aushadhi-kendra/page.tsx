@@ -5,6 +5,7 @@ import FilterModal from "@/components/FilterModal";
 import {useEffect, useState} from "react";
 import {useKendraStore} from "@/store/useKendraStore";
 import {useUserLocationStore} from "@/store/useUserLocationStore";
+import { Skeleton } from 'boneyard-js/react'
 
 export default function KendraPage() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -52,10 +53,8 @@ export default function KendraPage() {
                               aria-hidden="true">location_on</span>
 
                         <span className="font-bold text-on-surface">
-  {location.pincode
-      ? location.pincode
-      : `${location.district} • ${location.state}`}
-</span>
+                            { location.pincode ? location.pincode : `${location.district} • ${location.state}`}
+                        </span>
                         <button
                             type="button"
                             onClick={() => setIsModalOpen(!isModalOpen)}
@@ -64,7 +63,8 @@ export default function KendraPage() {
                         </button>
                     </div>
 
-                    <FilterModal
+
+                        <FilterModal
                         key={String(isModalOpen)}
                         componentName={"Kendra"}
                         isOpen={isModalOpen}
@@ -114,18 +114,25 @@ export default function KendraPage() {
                         </div>
                     )}
 
-                    {kendraResults.map((store, index) => (
-                        <StoreCard key={index} {...store} />
-                    ))}
+                    {/*/!*isLoading*!/*/}
+                    {/*{ true && (*/}
+                    {/*    <div className="space-y-4">*/}
+                    {/*        {[1, 2].map((i) => (*/}
+                    {/*            <div key={i} className="flex flex-col gap-7 justify-center items-center w-175 h-40 bg-surface-container-highest animate-pulse rounded-2xl border border-outline-variant/10">*/}
+                    {/*                <div className="w-80 h-10 bg-surface-container-low animate-pulse rounded-md flex justify-center items-center "><span className={"text-surface-container-highest"}>Loading..</span></div>*/}
+                    {/*                <div className="w-80 h-10 bg-surface-container-low animate-pulse rounded-md"></div>*/}
+                    {/*            </div>*/}
+                    {/*        ))}*/}
+                    {/*    </div>*/}
+                    {/*)}*/}
 
-                    {isLoading && (
-                        <div className="space-y-4">
-                            {[1, 2].map((i) => (
-                                <div key={i}
-                                     className="h-32 bg-surface-container-low animate-pulse rounded-2xl border border-outline-variant/10"/>
-                            ))}
-                        </div>
-                    )}
+                    <Skeleton name="store-card" loading={isLoading} >
+                        { kendraResults.map((store, index) => (
+                            <StoreCard key={index} {...store} />
+                        ))}
+                    </Skeleton>
+
+
 
                     {/* Load More Button */}
                     {hasMore && !isLoading && (
