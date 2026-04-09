@@ -1,3 +1,5 @@
+"use client";
+
 import {Hospital} from "@/store/types";
 import {useState} from "react";
 

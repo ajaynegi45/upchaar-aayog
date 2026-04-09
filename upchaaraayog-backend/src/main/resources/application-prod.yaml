@@ -1,5 +1,4 @@
 spring:
-
   datasource:
     url: ${DATABASE_URL}
     username: ${DATABASE_USERNAME}
@@ -12,7 +11,7 @@ spring:
   jpa:
     open-in-view: false
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     show-sql: false
     properties:
       hibernate:
@@ -29,15 +28,6 @@ logging:
     com.upchaar_aayog: DEBUG
     org.springframework.web: INFO
     org.hibernate.SQL: WARN
-
-#management:
-#  endpoints:
-#    web:
-#      exposure:
-#        include: health, info, metrics, prometheus
-#  endpoint:
-#    health:
-#      show-details: always
 
 server:
   port: 8080

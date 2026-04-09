@@ -5,6 +5,8 @@ import {useHospitalStore} from "@/store/useHospitalStore";
 import {useEffect, useRef} from "react";
 import {useShallow} from "zustand/react/shallow";
 import {HospitalTypeOption} from "@/store/types";
+import { Skeleton } from 'boneyard-js/react'
+
 
 export default function HospitalPage() {
     const {
@@ -167,20 +169,35 @@ export default function HospitalPage() {
                     </div>
                 ) : (
                     <>
-                        <div className="flex items-center justify-between px-2 pb-4 mb-2 border-b border-outline-variant/10">
-                            <h2 className="text-xs md:text-sm font-black text-primary-dark flex items-center gap-2">
-                                {isLoading && !hasResults ? "Searching..." : `Found ${pagination.totalElements} Hospitals`}
+                        {/*<div className="flex items-center justify-between px-2 pb-4 mb-2 border-b border-outline-variant/10">*/}
+                        {/*    <h2 className="text-xs md:text-sm font-black text-primary-dark flex items-center gap-2">*/}
+                                {isLoading && !hasResults ?
+                                    <div className={"w-full flex flex-row items-center justify-center gap-2 mb-10 mt-[-5] animate-pulse antialiased"}>
+                                        <p className={"text-xl text-primary"}>Searching</p>
+                                        <span className="material-symbols-outlined animate-spin text-primary text-sm ml-1">progress_activity</span>
+                                    </div>
+                                    :
+                                    <div className="flex items-center justify-between px-2 pb-4 mb-2 border-b border-outline-variant/10">
+                                        <h2 className="text-sm md:text-xl font-black text-primary-dark flex items-center gap-2">
+                                    Found {pagination.totalElements} Hospitals
+                                        </h2>
+                                    </div>
+                                }
                                 {isLoading && hasResults && (
                                     <span className="material-symbols-outlined animate-spin text-primary text-[18px] ml-1">progress_activity</span>
                                 )}
-                            </h2>
-                        </div>
-
+                        {/*    </h2>*/}
+                        {/*</div>*/}
+                        <Skeleton name="hospital-card" loading={isLoading} animate={"shimmer"}>
                         <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 transition-opacity duration-300 ${isLoading ? 'opacity-50 pointer-events-none' : 'opacity-100'}`}>
+
                             {hospitalResults.map((hospital) => (
                                 <HospitalCard key={hospital.id} {...hospital} />
                             ))}
+
+
                         </div>
+                        </Skeleton>
 
                         {/* Pagination / Load More */}
                         {hasMore && (

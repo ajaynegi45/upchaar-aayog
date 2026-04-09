@@ -3,6 +3,7 @@ import {Inter, Manrope} from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import BonesRegistryLoader from "@/components/BonesRegistryLoader";
 
 
 const manrope = Manrope({
@@ -44,6 +45,7 @@ export default function RootLayout({
                 rel="stylesheet"/>
         </head>
         <body className="bg-surface text-on-surface antialiased min-h-screen flex flex-col">
+        <BonesRegistryLoader/>
         <Navbar/>
         <main className="flex-grow pt-20">
             {children}

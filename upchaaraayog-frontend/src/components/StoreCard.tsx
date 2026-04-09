@@ -1,3 +1,5 @@
+"use client";
+
 import {KendraStore} from "@/store/types";
 import {openInMaps} from "@/utils/mapUtils";
 
