@@ -1,7 +1,7 @@
-package com.upchaaraayog.controllers;
+package com.upchaaraayog.controller;
 
 import com.upchaaraayog.dto.JanAushadhiKendraDTO;
-import com.upchaaraayog.services.JanAushadhiService;
+import com.upchaaraayog.service.JanAushadhiService;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 

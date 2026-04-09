@@ -29,3 +29,17 @@ build/
 ### VS Code ###
 .vscode/
 
+
+src/main/resources/dbdatapush/data
+classpath.txt
+
+HospitalCsvRunner.java
+HospitalCsvService.java
+
+dbdatapush
+
+application-dev.yaml
+
+.mvn
+.aws-sam
+samconfig.toml

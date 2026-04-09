@@ -1,54 +1,5 @@
 spring:
   application:
     name: upchaaraayog
-  
-  # Virtual Threads Mandate (Java 25 + Spring Boot 4)
-#  threads:
-#    virtual:
-#      enabled: true
-
-  datasource:
-    url: ${DATABASE_URL:jdbc:postgresql://ep-billowing-violet-a19l32b7-pooler.ap-southeast-1.aws.neon.tech/upchaaraayog_db?sslmode=require&channel_binding=require}
-    username: ${DATABASE_USERNAME:neondb_owner}
-    password: ${DATABASE_PASSWORD:npg_BhfdzvEWt58e}
-#    driver-class-name: org.postgresql.Driver
-#    hikari:
-#      maximum-pool-size: 10
-#      idle-timeout: 30000
-#      keepalive-time: 60000
-
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: false
-    open-in-view: false
-    properties:
-      hibernate:
-        format_sql: true
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-#        jdbc:
-#          batch_size: 50 # Performance optimization for PDF ingestion
-
-#  flyway:
-#    enabled: true
-#    baseline-on-migrate: true
-
-logging:
-  level:
-    root: INFO
-    com.upchaar_aayog: DEBUG
-    org.springframework.web: INFO
-    org.hibernate.SQL: DEBUG
-
-#management:
-#  endpoints:
-#    web:
-#      exposure:
-#        include: health, info, metrics, prometheus
-#  endpoint:
-#    health:
-#      show-details: always
-
-server:
-  port: 8080
-  shutdown: graceful # Operational excellence mandate
+  profiles:
+    active: prod

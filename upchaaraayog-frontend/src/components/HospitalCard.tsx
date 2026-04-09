@@ -1,81 +1,107 @@
-import { openInMaps } from "@/utils/mapUtils";
+import {Hospital} from "@/store/types";
+import {useState} from "react";
 
-interface HospitalCardProps {
-  name: string;
-  distance: string;
-  description: string;
-  specialties: string[];
-  isAyushmanEligible?: boolean;
-}
+export default function HospitalCard(hospital: Hospital) {
+    const {
+        name,
+        state,
+        district,
+        contactNumber,
+        hospitalType,
+        specialityNames,
+        schemeNames,
+        schemeCodes,
+    } = hospital;
 
-export default function HospitalCard({
-  name,
-  distance,
-  description,
-  specialties,
-  isAyushmanEligible = true,
-}: HospitalCardProps) {
-  const handleGetDirections = () => {
-    openInMaps(name);
-  };
-  return (
-    <article className="bg-surface-container-lowest p-8 rounded-2xl transition-all duration-300 group shadow-[0_2px_8px_rgba(0,0,0,0.04)] border border-transparent hover:border-secondary-container/50 hover:shadow-[0_32px_48px_rgba(45,52,51,0.04)] hover:-translate-y-1">
-      <div className="flex flex-col md:flex-row justify-between items-start mb-6 gap-4">
-        <div className="flex flex-col gap-1">
+    const displaySchemes = schemeCodes?.length ? schemeCodes : schemeNames;
 
-          <h2 className="text-2xl font-headline font-extrabold text-on-surface group-hover:text-secondary transition-colors">
-            {name}
-          </h2>
-          {/*<p className="text-on-surface-variant text-sm mt-1 font-medium italic">*/}
-          {/*  {description}*/}
-          {/*</p>*/}
-        </div>
-          <span className="bg-secondary-container text-on-secondary-container px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider whitespace-nowrap shadow-sm">
-            {distance}
-          </span>
-      </div>
+    const [showAllSpecialities, setShowAllSpecialities] = useState(false);
 
-      <div className="flex flex-wrap gap-2 mb-8">
-        {specialties.map((specialty, index) => (
-          <span
-            key={index}
-            className="text-[11px] font-bold bg-surface-container px-3 py-1.5 rounded-lg text-on-tertiary-container uppercase tracking-wider"
-          >
-            {specialty}
-          </span>
-        ))}
-      </div>
+    const DEFAULT_VISIBLE_SPECIALITIES = 5;
+    const hasMoreSpecialities = specialityNames.length > DEFAULT_VISIBLE_SPECIALITIES;
 
-      {/*<div className="flex items-center gap-6 mb-8 border-t border-b border-surface-container-low py-4">*/}
-      {/*  <div className="flex items-center gap-2 text-[10px] font-bold text-primary/80 uppercase tracking-[0.1em]">*/}
-      {/*    <span className="material-symbols-outlined text-[16px]" style={{ fontVariationSettings: "'FILL' 1" }}>*/}
-      {/*      verified*/}
-      {/*    </span>*/}
-      {/*    Government approved*/}
-      {/*  </div>*/}
-      {/*  <div className="flex items-center gap-2 text-[10px] font-bold text-primary/80 uppercase tracking-[0.1em]">*/}
-      {/*    <span className="material-symbols-outlined text-[16px]" style={{ fontVariationSettings: "'FILL' 1" }}>*/}
-      {/*      location_on*/}
-      {/*    </span>*/}
-      {/*    Verified location*/}
-      {/*  </div>*/}
-      {/*</div>*/}
+    const visibleSpecialities = showAllSpecialities
+        ? specialityNames
+        : specialityNames.slice(0, DEFAULT_VISIBLE_SPECIALITIES);
 
-      <div className="grid grid-cols-1 sm:grid-cols-1 gap-4">
-        <button
-          type="button"
-          onClick={handleGetDirections}
-          className="py-4 bg-gradient-to-br from-primary to-primary-dim text-on-primary rounded-xl font-bold text-sm shadow-sm active:scale-95 transition-all hover:shadow-md hover:cursor-pointer"
-        >
-          Get Directions
-        </button>
-        {/*<button*/}
-        {/*  type="button"*/}
-        {/*  className="py-4 bg-secondary-container text-on-secondary-container rounded-xl font-bold text-sm shadow-sm active:scale-95 transition-all hover:bg-secondary-fixed-dim"*/}
-        {/*>*/}
-        {/*  View Hospital Details*/}
-        {/*</button>*/}
-      </div>
-    </article>
-  );
+    return (
+        <article
+            className="bg-surface p-4 md:p-6 rounded-lg md:rounded-xl transition-all duration-300 border border-outline-variant/15 hover:border-primary/20 hover:shadow-lg flex flex-col justify-between h-full group">
+            <div className="flex flex-col gap-4">
+
+
+                <div className="space-y-1">
+
+
+                    {/* Hospital Name */}
+                    <h2 className="text-xl md:text-2xl mt-3 font-black text-on-surface leading-tight tracking-tight group-hover:text-primary transition-colors">
+                        {name}
+                    </h2>
+
+                    <div className="flex flex-col gap-2 mt-3">
+                        <div className="flex items-center gap-2 text-on-surface-variant font-medium text-sm">
+                            <span className="material-symbols-outlined text-sm">location_on</span>
+                            <span className="leading-none">{district}, {state}</span>
+                        </div>
+                        {contactNumber ? (
+                            <div className="flex items-center gap-2 text-on-surface-variant font-medium text-sm">
+                                <span className="material-symbols-outlined text-sm">call</span>
+                                <span className="leading-none">{contactNumber}</span>
+                            </div>
+                        ) : (
+                            <div
+                                className="flex items-center gap-2 text-on-surface-variant/50 font-medium text-sm italic">
+                                <span className="material-symbols-outlined text-[18px]">phone_disabled</span>
+                                <span className="leading-none">No contact available</span>
+                            </div>
+                        )}
+                    </div>
+                </div>
+
+                {/* Header Info */}
+                <div className="flex items-center gap-2 flex-wrap">
+                    {/* Hospital Type */}
+                    {hospitalType && (
+                        <span className="px-2 py-0.5 bg-surface-container-high text-on-surface-variant text-[10px] font-bold rounded-md uppercase tracking-wider whitespace-nowrap">
+                                {hospitalType.replace(/_/g, " ")} Hospital
+                            </span>
+                    )}
+                    {/* Schemes */}
+                    {displaySchemes?.map((scheme) => (
+                        <span key={scheme} className="px-2 py-0.5 bg-primary-container text-on-primary-container text-[10px] font-bold uppercase tracking-wider rounded-md whitespace-nowrap">
+                                {scheme}
+                            </span>
+                    ))}
+                </div>
+
+                {/* Specialities Section */}
+                {specialityNames.length > 0 && (
+                    <div className="mt-3 pt-3 border-t border-outline-variant/10">
+                        <h3 className="text-[10px] font-black text-on-surface-variant/60 uppercase tracking-widest mb-2">Available
+                            Specialities</h3>
+                        <div className="flex flex-wrap items-center gap-1.5">
+                            {visibleSpecialities.map((spec) => (
+                                <span
+                                    key={spec}
+                                    className="px-2 py-1 bg-surface-container-lowest text-on-surface-variant text-[11px] font-bold rounded-md border border-outline-variant/30"
+                                >
+                                    {spec.length > 30 ? spec.substring(0, 30) + '...' : spec}
+                                </span>
+                            ))}
+
+                            {hasMoreSpecialities && (
+                                <button
+                                    type="button"
+                                    onClick={() => setShowAllSpecialities(!showAllSpecialities)}
+                                    className="px-2 py-1 text-primary text-[11px] font-bold hover:underline cursor-pointer rounded-md bg-primary/5"
+                                >
+                                    {showAllSpecialities ? "Show Less" : `+${specialityNames.length - DEFAULT_VISIBLE_SPECIALITIES} More`}
+                                </button>
+                            )}
+                        </div>
+                    </div>
+                )}
+            </div>
+        </article>
+    );
 }
