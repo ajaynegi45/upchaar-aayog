@@ -1,0 +1,66 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: SAM Template for Upchaar Aayog Spring Boot REST APIs.
+
+Globals:
+  Function:
+    Timeout: 30
+    MemorySize: 1024
+    Runtime: java25
+    Architectures:
+      - arm64
+    SnapStart:
+      ApplyOn: PublishedVersions
+    Environment:
+      Variables:
+        DATABASE_URL: !Ref DatabaseUrl
+        DATABASE_USERNAME: !Ref DatabaseUsername
+        DATABASE_PASSWORD: !Ref DatabasePassword
+
+Parameters:
+  DatabaseUrl:
+    Type: String
+    Description: JDBC URL for the PostgreSQL database (NeonDB)
+  DatabaseUsername:
+    Type: String
+    Description: Database Username
+
+  DatabasePassword:
+    Type: String
+    NoEcho: true
+    Description: Database Password
+
+Resources:
+  # The API Gateway HTTP API setup automatically linking to the controllers
+  UpchaarAayogApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      StageName: prod
+      CorsConfiguration:
+        AllowMethods:
+          - GET
+          - POST
+          - OPTIONS
+        AllowHeaders:
+          - "*"
+        AllowOrigins:
+          - "*"
+
+  # The main proxy Lambda bridging API Gateway to Spring Boot Containers
+  UpchaarAayogFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: com.upchaaraayog.StreamLambdaHandler::handleRequest
+      CodeUri: .
+      Events:
+        CatchAll:
+          Type: HttpApi
+          Properties:
+            Path: /{proxy+}
+            Method: ANY
+            ApiId: !Ref UpchaarAayogApi
+
+Outputs:
+  ApiEndpoint:
+    Description: "API Gateway endpoint URL for Prod environment"
+    Value: !Sub "https://${UpchaarAayogApi}.execute-api.${AWS::Region}.amazonaws.com/prod/"
