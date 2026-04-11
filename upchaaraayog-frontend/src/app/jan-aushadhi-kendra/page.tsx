@@ -70,7 +70,7 @@ export default function KendraPage() {
                         isOpen={isModalOpen}
                         onClose={() => setIsModalOpen(false)}
                         onConfirm={handleLocationConfirm}
-                    />
+                        />
 
 
                     {/* <nav className="flex items-center gap-3" aria-label="Filters">
@@ -127,13 +127,14 @@ export default function KendraPage() {
                     {/*)}*/}
 
 
-                    {isLoading && (
+                    { isLoading && (
                         <div className="flex items-center justify-center gap-2 animate-pulse">
                             <p className={"text-primary-dark font-medium"}>Loading</p>
                             <span className="material-symbols-outlined animate-spin text-primary-dark text-[18px] ml-1">progress_activity</span>
                         </div>
                     )}
-                    <Skeleton name="store-card" loading={isLoading} animate={"shimmer"} >
+
+                    <Skeleton name="store-card" loading={isLoading} animate={"shimmer"}>
                         { kendraResults.map((store, index) => (
                             <StoreCard key={index} {...store} />
                         ))}
