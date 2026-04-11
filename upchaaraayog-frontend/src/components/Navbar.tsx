@@ -11,7 +11,7 @@ export default function Navbar() {
     const navLinks = [
         {href: "/jan-aushadhi-kendra", label: "Jan Aushadhi"},
         {href: "/pmjay-hospital", label: "PMJAY Hospital"},
-        {href: "/generic-medicine", label: "Medicine"},
+        // {href: "/generic-medicine", label: "Medicine"},
     ];
 
     return (

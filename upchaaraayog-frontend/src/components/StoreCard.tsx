@@ -1,3 +1,5 @@
+"use client";
+
 import {KendraStore} from "@/store/types";
 import {openInMaps} from "@/utils/mapUtils";
 
@@ -24,7 +26,7 @@ export default function StoreCard({name, kendraCode, status, address, state, dis
 
     return (
         <article
-            className="max-w-[700px] w-full bg-surface-container-lowest p-4 rounded-xl border border-outline-variant/30 hover:shadow-sm transition hover:bg-primary-container/10 active:bg-primary-container/10">
+            className="max-w-[700px] w-full bg-surface-container-lowest p-4 rounded-xl border border-outline-variant/30 hover:shadow-sm transition hover:bg-primary-container/10 active:bg-primary-container/10 mb-5">
 
             <div className="flex gap-3">
 
