@@ -2,9 +2,9 @@
 
 Upchaar Aayog is a full-stack healthcare discovery platform focused on affordability and access. It helps users:
 
-- find PM-JAY empanelled hospitals
+- find govt. scheme hospitals
 - find Jan Aushadhi Kendras
-- search lower-cost generic medicine alternatives
+- search lower-cost generic medicine alternatives (under-development)
 
 The repository contains a Next.js frontend and a Spring Boot backend.
 
@@ -13,17 +13,14 @@ The repository contains a Next.js frontend and a Spring Boot backend.
 ```text
 upchaar-aayog/
 ├── upchaaraayog-frontend/   # Next.js 16 + React 19 UI
-└── upchaaraayog-backend/    # Spring Boot 4 + PostgreSQL APIs
+└── upchaaraayog-backend/    # Spring Boot 4 + PostgreSQL
 ```
 
 ## Features
 
-- PM-JAY hospital discovery with state, district, hospital type, scheme, and speciality filters
-- Delhi preselected on the hospital page for faster first use
+- Hospital discovery with state, district, hospital type, scheme, and speciality filters
 - Jan Aushadhi Kendra search by location
 - generic medicine search experience for cheaper alternatives
-- mobile-friendly frontend access over LAN during development
-- cached hospital metadata and search responses to reduce duplicate fetches
 
 ## Tech Stack
 
@@ -37,13 +34,12 @@ upchaar-aayog/
 
 ### Backend
 
-- Spring Boot 4.0.5
+- Spring Boot 4
 - Spring Data JPA
 - JdbcClient
 - PostgreSQL
-- Maven Wrapper
 
-## How It Works
+<!-- ## How It Works
 
 ### Frontend
 
@@ -59,7 +55,7 @@ Key flows:
 
 The backend serves state, district, hospital, and kendra data. The hospital listing path uses `JdbcClient` for reads so the listing page does not pay the overhead of loading JPA entity graphs for every result card.
 
-That read path lives mainly in `upchaaraayog-backend/src/main/java/com/upchaaraayog/repository/HospitalReadRepository.java`.
+That read path lives mainly in `upchaaraayog-backend/src/main/java/com/upchaaraayog/repository/HospitalReadRepository.java`. -->
 
 ## Local Development
 
@@ -125,7 +121,6 @@ See `upchaaraayog-backend/src/main/resources/application.yaml`.
 
 Important endpoints:
 
-- `POST /api/v1/hospitals/search`
 - `GET /api/v1/hospitals/states`
 - `GET /api/v1/hospitals/districts?state=...`
 - `GET /api/v1/hospitals/schemes?state=...&district=...`
@@ -135,7 +130,7 @@ Important endpoints:
 - `GET /api/v1/states`
 - `GET /api/v1/states/{stateName}/districts`
 
-## Performance Notes
+<!-- ## Performance Notes
 
 - hospital listing reads are SQL-first and avoid classic JPA N+1 problems on the main listing endpoint
 - district, scheme, type, speciality, and search requests are cached in the frontend store
@@ -161,7 +156,7 @@ cd upchaaraayog-backend
 - add backend integration tests for hospital filters
 - add request-level metrics and response time dashboards
 - replace basic multi-selects with a more polished searchable select component
-- persist the user’s last selected hospital filters in local storage
+- persist the user’s last selected hospital filters in local storage -->
 
 ## Data and Purpose
 
