@@ -53,7 +53,7 @@ export default function Home() {
                         Find Kendra
                     </Link>
 
-                    <Link href="/jan-aushadhi-kendra"
+                    <Link href="/pmjay-hospital"
                           className=" mt-1 bg-primary text-on-primary px-5 py-3 md:text-lg  rounded-lg font-bold whitespace-nowrap hover:bg-primary-dim transition-all shadow-sm cursor-pointer">
                         Find Hospital
                     </Link>

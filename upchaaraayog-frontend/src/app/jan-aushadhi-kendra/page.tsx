@@ -126,7 +126,14 @@ export default function KendraPage() {
                     {/*    </div>*/}
                     {/*)}*/}
 
-                    <Skeleton name="store-card" loading={isLoading} >
+
+                    {isLoading && (
+                        <div className="flex items-center justify-center gap-2 animate-pulse">
+                            <p className={"text-primary-dark font-medium"}>Loading</p>
+                            <span className="material-symbols-outlined animate-spin text-primary-dark text-[18px] ml-1">progress_activity</span>
+                        </div>
+                    )}
+                    <Skeleton name="store-card" loading={isLoading} animate={"shimmer"} >
                         { kendraResults.map((store, index) => (
                             <StoreCard key={index} {...store} />
                         ))}
@@ -139,7 +146,7 @@ export default function KendraPage() {
                         <button
                             type="button"
                             onClick={handleLoadMore}
-                            className="w-full py-4 border-2 border-dashed border-outline-variant/30 rounded-xl text-on-surface-variant font-bold text-sm hover:bg-surface-container-low hover:border-primary/30 transition-all active:scale-[0.99] hover:cursor-pointer"
+                            className="w-full py-4 border-2 border-dashed border-outline-variant/30 rounded-xl text-on-surface-variant font-bold text-md bg-surface-container-low hover:bg-surface-container-high hover:border-primary/30 transition-all active:scale-[0.99] hover:cursor-pointer mt-5"
                         >
                             Load more stores
                         </button>
