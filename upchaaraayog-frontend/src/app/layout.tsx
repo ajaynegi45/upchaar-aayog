@@ -29,7 +29,16 @@ export const metadata: Metadata = {
     openGraph: {
         title: "Upchaar Aayog | Find Affordable Healthcare",
         description: "Locate nearby Jan Aushadhi stores for low-cost medicines and hospitals where treatment may be free.",
+        url: "https://upchaaraayog.vercel.app/",
+        siteName: "Upchaar Aayog",
         type: "website",
+        images: [
+            {
+                url: "/UpchaarAayog.webp",
+                alt: "Cultural Heritage of Uttarakhand - Traditions, Festivals, and Natural Beauty",
+            },
+        ],
+        locale: "en_US",
     },
 };
 
