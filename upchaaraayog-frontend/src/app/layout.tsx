@@ -5,8 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 // https://boneyard.vercel.app/overview
-import "../bones/registry";
-// import BonesRegistryLoader from "@/components/BonesRegistryLoader";
+import BonesRegistryLoader from "@/components/BonesRegistryLoader";
 
 
 const manrope = Manrope({
@@ -26,7 +25,7 @@ export const metadata: Metadata = {
     description:
         "Locate nearby Jan Aushadhi stores for low-cost medicines and hospitals where treatment may be free under Ayushman Bharat. Empowering citizens through health transparency.",
     keywords: ["Jan Aushadhi", "Ayushman Bharat", "Affordable Medicine", "Generic Medicine", "Free Treatment India"],
-    authors: [{name: "Upchaar Aayog Team"}],
+    authors: [{name: "Ajay Negi"}],
     openGraph: {
         title: "Upchaar Aayog | Find Affordable Healthcare",
         description: "Locate nearby Jan Aushadhi stores for low-cost medicines and hospitals where treatment may be free.",
@@ -48,7 +47,7 @@ export default function RootLayout({
                 rel="stylesheet"/>
         </head>
         <body className="bg-surface text-on-surface antialiased min-h-screen flex flex-col">
-        {/*<BonesRegistryLoader/>*/}
+        <BonesRegistryLoader/>
         <Navbar/>
         <main className="grow pt-20">
             {children}
