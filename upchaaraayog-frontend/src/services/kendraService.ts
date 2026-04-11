@@ -2,7 +2,7 @@ import {getApiBaseUrl} from "@/utils/api";
 import {Location} from "@/store/types";
 
 export interface KendraSearchResponse {
-    content: any[];
+    content: unknown[];
     number: number;
     totalPages: number;
     totalElements: number;
@@ -21,7 +21,16 @@ export const kendraService = {
             queryParams.append("pincode", location.pincode);
         }
 
-        const response = await fetch(`${getApiBaseUrl()}/api/v1/jan-aushadhi-kendra?${queryParams.toString()}`);
+        const response = await fetch(
+            `${getApiBaseUrl()}/api/v1/jan-aushadhi-kendra?${queryParams.toString()}`,
+            {
+                next: {
+                    revalidate: 604800, // 7 days
+                    tags: ["kendra-search"]
+                }
+            }
+
+        );
 
         if (!response.ok) {
             throw new Error("Failed to fetch stores");
