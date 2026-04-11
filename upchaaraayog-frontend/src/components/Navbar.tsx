@@ -19,16 +19,16 @@ export default function Navbar() {
             className="fixed top-0 w-full z-50 bg-white border-b border-gray-100 h-16 sm:h-20 md:bg-white/30 md:backdrop-blur-md md:border-white/20"
             aria-label="Main Navigation"
         >
-            <div className="relative flex justify-between items-center px-6 h-full max-w-7xl mx-auto">
+            <div className="relative flex justify-between items-center px-2 md:px-6 h-full max-w-7xl mx-auto">
                 <Link
                     href="/"
-                    className="flex items-center gap-3 hover:opacity-80 z-[60] cursor-pointer"
+                    className="flex items-center gap-3 hover:opacity-80 z-[60] cursor-pointer pl-0 pt-1 pr-1 pb-1"
                     onClick={() => setIsOpen(false)}
                 >
                     <Image src={favicon} alt="Upchaar Aayog" width={32} height={32}/>
                     <span className="text-xl sm:text-2xl font-bold text-[#016b5f] whitespace-nowrap">
-            Upchaar Aayog
-          </span>
+                        Upchaar Aayog
+                    </span>
                 </Link>
 
                 {/* Desktop Navigation */}
@@ -37,7 +37,7 @@ export default function Navbar() {
                         <Link
                             key={link.href}
                             href={link.href}
-                            className="text-md font-semibold text-gray-700 hover:text-primary transition-colors"
+                            className="text-md font-semibold text-gray-700 hover:text-primary transition-colors p-2"
                         >
                             {link.label}
                         </Link>
